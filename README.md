@@ -1,6 +1,6 @@
 
 # GaFEM
-GaFEM is a software, which aims at coupling genetic algorithm with FEM simulations for automated parameter optimization in the design processes. However, it is also suitable for many other optimization tasks, where the quality of a design can be evaluated by various computational approaches. 
+GaFEM is a software, which initially aims at coupling genetic algorithm with FEM simulations for automated parameter optimization in the design processes. It is also suitable for many other optimization tasks, where the quality of a design can be evaluated by various computational approaches. 
 
 ## Features
  - The user can use the graphic user interface of GaFEM (see **usage** section) to perform both single- and multi-objective optimizations. For single-objective optimization, the user will get the optimum or at least the sub-optimum designs with the highest fitness values. For multi-objective optimization, the user will get the so-called Pareto front, which is a set of designs that show the best compromise between conflicting design objectives. 
