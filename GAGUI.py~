@@ -1,0 +1,48 @@
+from Tkinter import *
+from ttk import *
+from menubar import Menubar
+from case import Case
+from login import Login
+from decoder import InputVar
+from evaluation import Evaluation
+from control import Control
+from pickle import dump
+
+import Pmw
+
+seed = [1,0,1]
+
+class GAGUI:
+	def __init__(self, parent):
+		self.parent = parent
+		self.server = None
+		self.parameters = {'Case':{}, 'Login':{},'design variables':[], 'constraint':[], 'seed':[], 'GA parameters':{}, 'multithreading':[], 'file':None}
+
+		self.MainFrame = Frame(parent)
+		self.MainFrame.pack(fill=BOTH, expand=1)
+		self.InitialFrame = Frame(self.MainFrame)
+		self.InitialFrame.pack(side='top', fill=X, expand=1)
+		self.Case = Case(self.InitialFrame, self.parameters)
+		self.Case.pack(side='left', fill=X, padx=10, expand=1)
+		self.Login = Login(self.InitialFrame, self.parameters, self.server)
+		self.Login.pack(side='left', fill=X, padx=10, expand=1)
+		self.InputVar = InputVar(self.MainFrame, self.parameters)
+		self.InputVar.pack(side='top', fill=X, padx=10, expand=1)
+		self.Evaluation = Evaluation(self.MainFrame, self.parameters)
+		self.Evaluation.pack(side='top', fill=X, padx=10, expand=1)
+		self.Control = Control(parent, self.MainFrame, self.parameters, {'Case':self.Case, 'Login':self.Login, 'InputVar':self.InputVar,'Evaluation':self.Evaluation})
+		self.Control.pack(side='top', fill=X, padx=10, expand=1)
+		self.menubar = Menubar(parent, self.parameters, {'Case':self.Case, 'Login':self.Login, 'InputVar':self.InputVar,'Evaluation':self.Evaluation, 'Control':self.Control})	
+root = Tk()
+def on_closing():
+	f = open("switch.txt", "wb")
+	dump(0, f)
+	f.close()
+	root.destroy()
+
+Pmw.initialise(root)
+GAGUI(root)
+root.title('GaFEM')
+root.protocol("WM_DELETE_WINDOW", on_closing)
+root.mainloop()
+
