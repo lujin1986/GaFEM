@@ -6,7 +6,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
  - The user can use the graphic user interface of GaFEM (see **usage** section) to perform both single- and multi-objective optimizations. For single-objective optimization, the user will get the optimum or at least the sub-optimum designs with the highest fitness values. For multi-objective optimization, the user will get the so-called Pareto front, which is a set of designs that show the best compromise between conflicting design objectives. 
  - The user can choose to perform the computation either on the local computer or on a remote cluster.
  - In case of large optimization problems, parallelization of computation can be performed to accelerate the optimization process.
- - The user can save frequently applied optimization scenarios as .opt files, which can 
+ - The user can save frequently applied optimization scenarios as .opt files for the convenience of repeated usage. 
  - When the optimization is interupted unexpectedly, it is possible to resume the optimizaton process at the broken point.
 
 ## Getting started
