@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from mttkinter.mtTkinter import *
+#from mttkinter.mtTkinter import *
 from ttk import *
 import ttk
 from pickle import dump, load
@@ -135,7 +135,6 @@ class InputVar:
 
 		
 	def chooseType(self, value):
-		print value
 		if value == 'continuous':
 			self.Candidates.config(state='disabled')
 			for item in [self.digit, self.max, self.min]:

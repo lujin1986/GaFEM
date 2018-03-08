@@ -1,9 +1,8 @@
-from mttkinter.mtTkinter import * 
+#from mttkinter.mtTkinter import * 
 from ttk import *
 import Tkinter
-from pylab import savetxt, array
+from numpy import savetxt, array
 from subprocess import Popen, PIPE
-import shlex 
 from threading import Thread, Lock
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import matplotlib.pyplot as plt
@@ -45,7 +44,6 @@ class Result:
 		self.plot_GEN=-1
 		self.GEN=0
 		self.GEN_max = float(parameters['GA parameters']['max. number of generations'])
-		print self.parameters
 		self.cluster = self.parameters['Login']['cluster']
 		self.remoteFolder=None
 		self.lock = Lock()
@@ -156,18 +154,6 @@ class Result:
 
 
 	def runscript(self):
-
-		"""
-		if self.parameters['Login']['where'] == 'cluster':
-			self.server = paramiko.SSHClient()
-			self.server.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-			try:
-				self.server.connect(hostname='rzsv1630', port=22,username='luj', password='l19860401')
-			except:
-				print "Login Failure"
-			else:
-				print "Successfully login!"
-		"""
 		if not self.viewresults:
 			command = ['python', 'main3.py', str(self.restart), "%s" % self.parameters['Case']['name']]
 			savetxt("switch.txt", array([1]))
@@ -181,7 +167,6 @@ class Result:
 				self.sftp.chdir(self.remoteFolder)
 				if self.restart:
 					files = glob("*")
-					print files
 				else:
 					files = ['main3.py', 'objective.py', 'switch.txt']
 					for file in self.parameters['template'].split(','):
@@ -211,11 +196,9 @@ class Result:
 				status = check
 			
 			while check() is False or check() is None:
-				#print "check is %s" % check()
 				sleep(1)
 
 			error = status()
-			#print "the error status is %s" % str(error)
 			savetxt("switch.txt", array([0]))
 
 			if self.cluster:
@@ -321,7 +304,6 @@ class Result:
 								populations.append(file)
 							elif file[:9]=='offspring':
 								offsprings.append(file)
-						print "offspring files are: %s" % str(offsprings)
 						offspring_max_new = len(offsprings)
 						population_max_new = len(populations)
 						files = []
@@ -343,7 +325,6 @@ class Result:
 						for file in files:
 							if os.access(file, os.R_OK):
 								os.remove(file)
-							print "getting %s" % file
 							self.sftp.get(file, file)																		
 				if os.access(result_file, os.R_OK):
 					new_mtime = os.path.getmtime(result_file)
@@ -432,8 +413,6 @@ class Result:
 						population_max_new = len(populations)
 						result_max_new = len(results)
 						final_max_new = len(finals)
-						print "results: %s "  %str(results)
-						print "finals: %s" % str(finals)
 						files = []
 						for i in range(offspring_max-1, offspring_max_new):
 							files.append('offspring_Gen_%d.txt' % i)
@@ -454,7 +433,6 @@ class Result:
 						for file in files:
 							if os.access(file, os.R_OK):
 								os.remove(file)
-							print "load file: %s" % file
 							self.sftp.get(file, file)
 								
 				final_GEN = glob('final_GEN*')

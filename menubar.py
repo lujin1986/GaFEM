@@ -1,4 +1,4 @@
-from mttkinter.mtTkinter import *
+#from mttkinter.mtTkinter import *
 from ttk import *
 import Pmw
 import pickle
@@ -134,7 +134,6 @@ class Menubar:
 		filename = tkFileDialog.askopenfilename(defaultextension=".opt", filetypes=[("Opt Files", "*.opt"), ("Result Files", "*.res")])
 		self.File = filename
 		if filename:
-			print filename
 			if filename[-4:] == ".res":
 				self.allunits['Control'].Results.config(state='normal')
 				f = open(filename, 'rb')
@@ -149,8 +148,6 @@ class Menubar:
 			for key in opt.keys():
 				if key != 'Login':
 					self.parameters[key] = opt[key]
-			#print self.allunits
-			#print opt
 			self.allunits['Case'].name.set(opt['Case']['name'])		
 			self.allunits['Case'].WD.set(opt['Case']['WD'])	
 			if opt['Case']['type'] == 'single-objective':
@@ -193,7 +190,6 @@ class Menubar:
 			else:
 				self.allunits['Control'].multithreads.set(0)
 				self.allunits['Control'].InputThread.config(state='disabled')	
-		print self.parameters
 	
 	
 	def new_file(self):

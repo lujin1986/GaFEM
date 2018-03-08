@@ -65,7 +65,6 @@ class SetObj:
 			tkMessageBox.showerror(title='Error', message='The field for the name of the objective can not be empty.')
 
 	def delete(self):
-		print self.Tree.selection()
 		labels = [self.Tree.item(i)['text'] for i in self.Tree.selection()]
 		for label in labels:
 			ind = [self.objectives.index(i) for i in self.objectives if i[0] == label]
@@ -92,7 +91,6 @@ class SetObj:
 				self.newwindow.destroy()
 		else:
 			self.newwindow.destroy()
-		print self.parameters
 if __name__ == "__main__":
 		
 	root = Tk()

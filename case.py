@@ -1,4 +1,4 @@
-from mttkinter.mtTkinter import *
+#from mttkinter.mtTkinter import *
 from ttk import *
 import ttk
 from PIL import Image, ImageTk 

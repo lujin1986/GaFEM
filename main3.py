@@ -139,38 +139,38 @@ def save_result_GEN(result_GEN):
 		else: GEN_saved = n
 		for GEN in range(GEN_saved, GEN+1):
 			with open("result_GEN%d.txt" % GEN, 'w') as f:
-				print >> f, "name; \t values of variables;",
+				f.write("name; \t values of variables; ")
 				if Multi:
 					for i in objectives[:-1]:
-						print >> f, "\t %s;" % i[0],
-					print >> f, "\t %s" % objectives[-1][0]
-				else: print >> f, "\t fitness"
+						f.write("\t %s; " % i[0])
+					f.write("\t %s\n" % objectives[-1][0])
+				else: f.write("\t fitness\n")
 
 				for i in result_GEN[GEN]:
-					print >> f, "%s; \t %s;" % (i[0], str(i[1])),
+					f.write("%s; \t %s; " % (i[0], str(i[1])))
 					for obj in i[2][:-1]:
-						print >> f, "\t %s;" % str(obj),
-					print >> f, "\t %s" % str(i[2][-1])
+						f.write("\t %s; " % str(obj))
+					f.write("\t %s\n" % str(i[2][-1]))
 	else:
 		with open("result.txt", 'w') as f:
-			print >> f, "name; \t values of variables; \t fitness"
+			f.write("name; \t values of variables; \t fitness\n")
 			for i in result_GEN:
-				print >> f, "%s; \t %s; \t %s" % (i[0], str(i[1]), str(i[2]))
+				f.write("%s; \t %s; \t %s\n" % (i[0], str(i[1]), str(i[2])))
 
 
 def save_final_GEN(pop, g):
 	with open("final_GEN%d.txt" % g, 'w') as f:
-		print >> f, "name; \t values of variables;",
+		f.write("name; \t values of variables; ")
 		for i in objectives[:-1]:
-			print >> f, "\t %s;" % i[0],
-		print >> f, "\t %s" % objectives[-1][0]
+			f.write("\t %s; " % i[0])
+		f.write("\t %s\n" % objectives[-1][0])
 
 
 		for i in range(len(pop)):
-			print >> f, "%s-%s; \t %s;" % (str(g).zfill(Gendigs), str(i).zfill(Inddigs), str(decoder(pop[i]))),
+			f.write("%s-%s; \t %s; " % (str(g).zfill(Gendigs), str(i).zfill(Inddigs), str(decoder(pop[i]))))
 			for fitness in pop[i].fitness.values[:-1]:
-				print >> f, "\t %s;" % str(fitness),
-			print >> f, "\t %s" % str(pop[i].fitness.values[-1])
+				f.write("\t %s; " % str(fitness))
+			f.write("\t %s\n" % str(pop[i].fitness.values[-1]))
 
 
 			
@@ -211,13 +211,13 @@ def getfitness(templateFiles):
 							break
 						same = 1
 					if same:
-						print "%s is the same as %s." % (name, y[0])
+						print("%s is the same as %s." % (name, y[0]))
 						job[1].fitness.values = (y[2],)
 						flag=0
 						break
 
 			if flag:
-				print "starting the evaluation of %s at %s." % (name, datetime.now())
+				print("starting the evaluation of %s at %s." % (name, datetime.now()))
 				stdout.flush()
 				for n, templateFile in enumerate(templateFiles):
 					replacedFile=str(templateFile[1])
@@ -229,9 +229,9 @@ def getfitness(templateFiles):
 						f1 = open('I%s.%s' % (name, end), 'w')	
 					else:
 						f1 = open('T%s_%s' % (name, templateFile[0]), 'w')
-					print >> f1, replacedFile
+					f1.write(replacedFile+'\n')
 					f1.close()
-				print "start growing %s" % name
+				print("start growing %s" % name)
 				stdout.flush()
 				try:
 					grow(name, phenotype)
@@ -257,7 +257,7 @@ def getfitness(templateFiles):
 							result_GEN.append([job[0], decoder(job[1]), job[1].fitness.values[0]])
 			
 						valid_ind.append(job[1])
-						print "The evaluation of %s bas completed at %s" % (name, datetime.now())
+						print("The evaluation of %s bas completed at %s" % (name, datetime.now()))
 						stdout.flush()
 
 
@@ -307,20 +307,20 @@ def history(pop, g, append = True):
 	else:
 		mode = 'w'
 	with open("history.txt", 'w') as history:
-		print >> history, "=============== Generation %d results ================" % g
-		print "=============== Generation %d results ================" % g
-		print "  Min %s" % min(fits)
-		print >> history, "  Min %s" % min(fits)
-		print "  Max %s" % max(fits) 
-		print >> history, "  Max %s" % max(fits) 
-		print "  Avg %s" % mean 
-		print >> history, "  Avg %s" % mean 
-		print "  Std %s" % std 
-		print >> history, "  Std %s" % std 
-		print "phenotype of fittest individual: %s" % fittest 
-		print >> history, "phenotype of fittest individual: %s" % fittest 
-		print "genotype of fittest individual: %s" % decoder(fittest)
-		print >> history, "genotype of fittest individual: %s" % decoder(fittest) 
+		history.write( "=============== Generation %d results ================\n" % g)
+		print("=============== Generation %d results ================" % g)
+		print("  Min %s" % min(fits))
+		history.write("  Min %s\n" % min(fits))
+		print("  Max %s" % max(fits))
+		history.write("  Max %s\n" % max(fits))
+		print("  Avg %s" % mean )
+		history.write("  Avg %s\n" % mean)
+		print("  Std %s" % std)
+		history.write("  Std %s\n" % std)
+		print("phenotype of fittest individual: %s" % fittest) 
+		history.write("phenotype of fittest individual: %s\n" % fittest) 
+		print("genotype of fittest individual: %s" % decoder(fittest))
+		history.write("genotype of fittest individual: %s\n" % decoder(fittest)) 
 
 	return fittest
 	
@@ -389,7 +389,7 @@ def main(restart, elitism, seed):
 	
 			
 
-		print "restart at generation %d " % initGEN
+		print("restart at generation %d " % initGEN)
 			
 		parallelization(indList)
 		if not switch:
@@ -420,7 +420,7 @@ def main(restart, elitism, seed):
 
 	for g in range(initGEN,NGEN):	
 		if g==0:
-			print "starting generation %d at %s\n."	% (g, datetime.now())
+			print("starting generation %d at %s\n."	% (g, datetime.now()))
 			stdout.flush()
 			if Multi:
 				result_GEN.append([])
@@ -445,7 +445,7 @@ def main(restart, elitism, seed):
 				save_final_GEN(pop, g)	
 		
 		else:
-			print "Generation %d is being generated... at %s." % (g, datetime.now())
+			print("Generation %d is being generated... at %s." % (g, datetime.now()))
 			if Multi:
 				result_GEN.append([])
 			# Select the next generation individuals:
@@ -480,7 +480,7 @@ def main(restart, elitism, seed):
 			parallelization(offspring)
 			if not switch:
 				break
-			print "The evaluation of generation: %d has been complete!" % g
+			print("The evaluation of generation: %d has been complete!" % g)
 			if Multi:
 				pop = toolbox.select(offspring+pop, k=Nind)
 				initGEN = initGEN+1
@@ -500,9 +500,7 @@ def main(restart, elitism, seed):
 
 def checkSwitch():
 	global switch
-	#print "switch start working at %s" % datetime.now()
 	while switch:
-		#print "check switch... at %s" % datetime.now()
 		switch = loadtxt("switch.txt")
 		sleep(2)
 	f = open("valid_ind.txt" , 'wb')
@@ -510,7 +508,6 @@ def checkSwitch():
 	f.close()
 	save_result_GEN(result_GEN)
 	
-		#print "the switch is %s at %s\n" % (str(switch), datetime.now())
 		
 def archive():
 	global valid_ind, result_GEN, Multi, switch, fitnesses
@@ -568,10 +565,10 @@ if __name__ == "__main__":
 	archive_t.join()
 	
 	if err1:
-		print "Something wrong has occured in running the \"grow\" function imported from grow.py"
-		print err1
+		print("Something wrong has occured in running the \"grow\" function imported from grow.py")
+		print(err1)
 		exit(1)
 	elif err2:
-		print "Something wrong has occured in running the \"objective\" function imported from objective.py"
-		print err2
+		print("Something wrong has occured in running the \"objective\" function imported from objective.py")
+		print(err2)
 		exit(1)

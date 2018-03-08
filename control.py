@@ -1,4 +1,4 @@
-from mttkinter.mtTkinter import *
+#from mttkinter.mtTkinter import *
 from ttk import *
 import ttk
 from pickle import dump, load
@@ -81,8 +81,7 @@ class Control:
 				if self.parameters['constraint']:
 					self.parameters['constraint'][0]=0
 					self.parameters['constraint'][1]=''
-				else:		
-					print	self.parameters['constraint']							
+				else:								
 					self.parameters['constraint'][0].append(0)
 			self.parameters['grow'] = self.allunits['Evaluation'].grow.get()			
 			self.parameters['template'] = self.allunits['Evaluation'].template.get()			
@@ -211,7 +210,6 @@ class Control:
 			self.Optimize.config(text = "      Start   \nOptimization")
 			self.Results.config(state='normal')
 	def closeRW(self):
-		print "switch is %d" % self.ResultWidget.switch
 		if self.ResultWidget.switch:
 			message = "Are you going to stop the optimization process"
 			ok = tkMessageBox.askokcancel('', message)
@@ -257,23 +255,23 @@ class Control:
 				os.chdir(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
 				if self.parameters['Case']['type'] == 'single-objective':
 					with open("result.txt", 'w') as f:
-						print >> f, "name; \t values of variables; \t fitness"
+						f.write("name; \t values of variables; \t fitness\n")
 						for i, j, k in zip(list(results['name']), list(results['values of variables']), list(results['fitness'])):
-							print >> f, "%s; \t %s; \t %s" % (str(i), str(j), str(k))
+							f.write("%s; \t %s; \t %s\n" % (str(i), str(j), str(k)))
 				else:
 					GEN = len(results)
 					objectives = self.parameters['obj_setting']
 					for i in range(GEN):
 						with open("final_GEN%d.txt" % i, 'w') as f:
-							print >> f, "name; \t values of variables;",
+							f.write("name; \t values of variables; ")
 							for j in objectives[:-1]:
-								print >> f, "\t %s;" % j[0],
-							print >> f, "\t %s" % objectives[-1][0]
+								f.write("\t %s; " % j[0])
+							f.write("\t %s\n" % objectives[-1][0])
 							for k in range(len(results[i])):
-								print >> f, "%s; \t %s;" % (str(list(results[i]['name'])[k]), str(list(results[i]['values of variables'])[k])),
+								f.write("%s; \t %s; " % (str(list(results[i]['name'])[k]), str(list(results[i]['values of variables'])[k])))
 								for objective in objectives[:-1]:
-									print >> f, "\t %s;" % str(list(results[i][objective[0]])[k]),
-								print >> f, "\t %s" % str(list(results[i][objectives[-1][0]])[k])
+									f.write("\t %s; " % str(list(results[i][objective[0]])[k]))
+								f.write("\t %s\n" % str(list(results[i][objectives[-1][0]])[k]))
 
 
 			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.allunits['Login'], viewresults=True )
@@ -292,7 +290,6 @@ class Control:
 		self.SeedFrame.pack()
 		self.variables = []		
 		for i in self.parameters['design variables']:
-			print i
 			label = i[0]
 			exec('self.var_%s=StringVar()' % label)
 			exec("""self.Seed_%s= Pmw.EntryField(self.SeedFrame.interior(),

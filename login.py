@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from mttkinter.mtTkinter import *
+#from mttkinter.mtTkinter import *
 from pickle import dump, load
 from ttk import *
 from time import sleep
@@ -67,7 +67,7 @@ class Login:
 		self.labelLicense.grid(row=3, column=0, sticky= 'w', padx=12)
 		self.showLicense = Label(self.display, text = self.license.get())
 		self.showLicense.grid(row=3, column=1, sticky= 'w', padx=12)
-		print self.parameters
+
 
 	def pack(self, side='top', fill=None, expand=None, padx=0, pady=0):
 		self.LoginFrame.pack(side=side, fill=fill, expand=expand, padx=padx, pady=pady)		
@@ -112,7 +112,6 @@ class Login:
 				channel = self.server.open_session()
 				channel.exec_command('cat output')
 				output = channel.makefile('rb', -1).readlines()
-				#print output[1]
 				if output[1] == 'Viewer licenses:\n':
 					for i in output:
 						if 'available.' in i.split():

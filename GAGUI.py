@@ -1,4 +1,4 @@
-from mttkinter.mtTkinter import *
+#from mttkinter.mtTkinter import *
 from ttk import *
 from menubar import Menubar
 from case import Case
