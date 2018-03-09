@@ -1,7 +1,7 @@
-#from mttkinter.mtTkinter import *
-from ttk import *
+from tkinter import *
+from tkinter.ttk import *
 import Pmw
-import tkFileDialog
+import tkinter.filedialog as tkFileDialog
 from glob import glob
 from PIL import Image, ImageTk 
 import os
