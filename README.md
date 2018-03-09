@@ -1,4 +1,4 @@
-
+   
 # GaFEM
 GaFEM is a software, which initially aims at coupling genetic algorithm with FEM simulations for automated parameter optimization in the design processes. It is also suitable for many other optimization tasks, where the quality of a design can be evaluated by various computational approaches. 
 
@@ -26,7 +26,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
    
 3. Viewing the optimization results in tabular form
 
-   <img src="images/print_results.png" width="500"> 
+              <img src="images/print_results.png" width="700"> 
    
 ## Preparations for starting an optimization case
    to be continued
