@@ -15,6 +15,15 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
 3. Copy all the files in this repository to your working directory.
 4. Enter your working directory through a command prompt in Window system or a terminal in Linux system and type `python GAGUI.py` to start the software.
 
-## Usage
+## Usage of the graphic user interface
 1. The primary user interface
-<img src="images/main_interface.png" width="1200"> 
+   <img src="images/main_interface.png" width="1200"> 
+   
+2. Monitoring the optimization process
+   <img src="images/monitoring_optimization.png" width="1200"> 
+   
+3. Viewing the optimization results in tabular form
+   <img src="images/print_results.png" width="1200"> 
+   
+## Preparations for starting an optimization case
+   to be continued
