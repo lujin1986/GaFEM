@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-#from mttkinter.mtTkinter import *
+from tkinter import *
 from pickle import dump, load
-from ttk import *
+from tkinter.ttk import *
 from time import sleep
-import tkMessageBox
+import tkinter.messagebox as tkMessageBox
 import threading
 import paramiko
 import Pmw
@@ -55,7 +54,7 @@ class Login:
 		self.lgobutton = Button(self.user,  text= 'Logout', command=self.buttonLogout, state = 'disabled')
 		self.lgobutton.grid(row=2, column=2, sticky='E')		
 		self.display = Frame(self.LoginFrame, borderwidth=2, relief='groove')
-		self.display.grid(row=1, column=0, pady=5, padx=5, sticky='we')
+		self.display.grid(row=1, column=0, ipady=12, padx=5, sticky='wens')
 		self.radio_var = IntVar()
 		self.radios = []
 		for radio, i in zip(('Run computations on PC', 'Run computations on cluster'), (0, 1)):
