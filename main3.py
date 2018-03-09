@@ -1,12 +1,12 @@
 #!/usr/bin/python
-from pylab import savetxt, loadtxt, array
+from numpy import savetxt, loadtxt, array
 from deap import base, creator, tools
 from scipy import interpolate
-from cPickle import load, dump
+from pickle import load, dump
 from os import system, access, remove, path
 from time import sleep
 from glob import glob
-from Queue import Queue, Empty
+from queue import Queue, Empty
 from threading import Thread
 from random import randint
 from math import log
@@ -20,9 +20,6 @@ from random import random
 from sys import stdout
 from pandas import read_csv
 import traceback
-
-#errlog = open("error.log", 'w')
-#sys.stderr = errlog
 
 
 Name = argv[-1]
