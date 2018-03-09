@@ -1,9 +1,9 @@
-#from mttkinter.mtTkinter import *
-from ttk import *
+from tkinter import *
+from tkinter.ttk import *
 import Pmw
 import pickle
-import tkFileDialog
-import tkMessageBox
+import tkinter.filedialog as tkFileDialog
+import tkinter.messagebox as tkMessageBox
 from set_obj import SetObj
 class Menubar:
 	def __init__(self, parent, parameters, allunits):
