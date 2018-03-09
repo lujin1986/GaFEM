@@ -1,9 +1,8 @@
-#from mttkinter.mtTkinter import *
-from ttk import *
-import ttk
+from tkinter import *
+from tkinter.ttk import *
 from pickle import dump, load
 import Pmw
-import tkMessageBox
+import tkinter.messagebox as tkMessageBox
 import subprocess 
 import shlex 
 import os, shutil
@@ -37,13 +36,13 @@ class Control:
 		self.ControlFrame.pack()
 		self.Frame= Frame(self.ControlFrame)
 		self.Frame.pack(side='top')
-		self.CheckRestart = Checkbutton(self.Frame, text = "restart", variable=self.restart)	
+		self.CheckRestart = Checkbutton(self.Frame, text = "resume", variable=self.restart)	
 		self.CheckRestart.grid(row=0,column=0, ipadx=5, sticky='w')
 		self.CheckElitism = Checkbutton(self.Frame, text = "elitism", variable=self.elitism)	
 		self.CheckElitism.grid(row=1,column=0, ipadx=5, sticky='w')
 		self.CheckThread = Checkbutton(self.Frame, text = "multi-threads:", variable=self.multithreads, command=self.checkThreadStatus)	
 		self.CheckThread.grid(row=0,column=1, sticky='w')
-		self.InputThread = Entry(self.Frame, width = 8, textvariable=self.threads, state = 'disabled')
+		self.InputThread = Entry(self.Frame, width = 11, textvariable=self.threads, state = 'disabled')
 		self.InputThread.grid(row=0,column=2, sticky='w', padx=2)
 		self.CheckSeed = Checkbutton(self.Frame, text = "seeding:", variable=self.seeding, command=self.checkSeedStatus)	
 		self.CheckSeed.grid(row=1,column=1, sticky='w')
