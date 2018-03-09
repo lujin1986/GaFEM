@@ -12,7 +12,6 @@ from threading import Thread
 from time import sleep
 
 
-OS = "Windows"
 class Control:
 	def __init__(self, root, parent, parameters, allunits):
 		parent.__init__
