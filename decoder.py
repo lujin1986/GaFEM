@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-#from mttkinter.mtTkinter import *
-from ttk import *
-import ttk
+from tkinter import *
+from tkinter.ttk import *
+from tkinter import ttk
 from pickle import dump, load
 import Pmw
-import tkMessageBox
-import tkFileDialog
+import tkinter.filedialog as tkFileDialog
+import tkinter.messagebox as tkMessageBox
 from PIL import Image, ImageTk 
 class InputVar:
 	def __init__(self, parent, parameters):
@@ -51,7 +50,7 @@ class InputVar:
 		self.Label= Pmw.EntryField(self.Input,
                         labelpos='w', 
                         label_text='label: ',
-                        entry_width=14,
+                        entry_width=15,
                         entry_textvariable=self.label)
 		self.Label.grid(row=0, column=0,padx=2)
 		self.Type =Pmw.OptionMenu(self.Input,              
@@ -61,16 +60,6 @@ class InputVar:
 				menubutton_textvariable=self.choice,
 				menubutton_width=9,
 				command=self.chooseType)	
-				
-		"""	
-		self.Type = Pmw.ComboBox(self.Input,
-               label_text='type:',
-               labelpos='w',
-               scrolledlist_items=['continuous', 'discrete'],
-               selectioncommand=self.chooseType,
-               listbox_width=3,
-               dropdown=True)"""
-
 		self.Type.grid(row=1, column=0,padx=2)
 		Pmw.alignlabels([self.Label, self.Type], sticky='e')
 		self.Max= Pmw.EntryField(self.Input,
@@ -89,7 +78,7 @@ class InputVar:
 		self.Digit= Pmw.EntryField(self.Input,
 				labelpos='w', 
 				label_text='digit:',
-				entry_width=5,
+				entry_width=6,
 				entry_textvariable=self.digit)
 		self.Digit.grid(row=0, column=2,padx=4)
 		self.Candidates = Button(self.Input,  text= 'candidates', command=self.setCandidates, state = 'disabled')
@@ -315,7 +304,7 @@ class InputVar:
 		else:	
 			self.chooseType(self.type.get())
 			self.EditDialog.destroy()
-	 		self.EditDialog=None
+			self.EditDialog=None
 			
 	def setCandidates(self):
 		self.candidates1= self.candidates[:]
