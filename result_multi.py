@@ -1,13 +1,12 @@
-#from mttkinter.mtTkinter import * 
-from ttk import *
-import Tkinter
+from tkinter import *
+from tkinter.ttk import *
 from numpy import savetxt, array
 from subprocess import Popen, PIPE
 from threading import Thread, Lock
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import matplotlib.pyplot as plt
 import os, sys
-import tkMessageBox
+import tkinter.messagebox as tkMessageBox
 import Pmw
 import paramiko
 try:
@@ -22,7 +21,7 @@ import pandas as pd
 from glob import glob
 import os
 import shutil
-from cPickle import dump
+from pickle import dump
 from PIL import Image, ImageTk
 
 
