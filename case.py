@@ -1,9 +1,9 @@
-#from mttkinter.mtTkinter import *
-from ttk import *
-import ttk
+from tkinter import *
+from tkinter.ttk import *
+from tkinter import ttk
 from PIL import Image, ImageTk 
 from set_obj import SetObj
-import tkFileDialog
+import tkinter.filedialog as tkFileDialog
 
 class Case:
 	def __init__(self, parent, parameters):
