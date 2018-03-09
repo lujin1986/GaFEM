@@ -1,7 +1,8 @@
-from Tkinter import *
-from ttk import *
+from tkinter import *
+from tkinter.ttk import *
 import Pmw
-import tkMessageBox
+import tkinter.messagebox as tkMessageBox
+
 class SetObj:
 	def __init__(self, parent, parameters):
 		self.parent = parent
