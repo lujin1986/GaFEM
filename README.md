@@ -7,7 +7,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
  - The user can choose to perform the computation either on the local computer or on a remote cluster.
  - In case of large optimization problems, parallelization of computation can be performed to accelerate the optimization process.
  - The user can save frequently applied optimization scenarios as .opt files for the convenience of repeated usage. 
- - When the optimization is interupted unexpectedly, it is possible to resume the optimizaton process at the broken point.
+ - When the optimization is interrupted unexpectedly, it is possible to resume the optimization process at the broken point.
 
 ## Getting started
 1. Make sure python 3 is installed in the computer.
@@ -32,7 +32,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
 Three different files needed to be prepared for performing the optimization.
 1. grow.py: a python file to call FEM solver and to execute FEM simulations.
 2. template file: a file or more files that contain all the instructions and design parameters for setting up the models of FEM simulations.
-3. object.py: a python file to define how to evaluate the evolved designs based on the simulation reults.
+3. object.py: a python file to define how to evaluate the evolved designs based on the simulation results.
 
 To be continued
 
