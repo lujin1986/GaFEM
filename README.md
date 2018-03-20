@@ -1,4 +1,4 @@
-   
+    
 # GaFEM
 GaFEM is a software, which initially aims at coupling genetic algorithm with FEM simulations for automated parameter optimization in the design processes. It is also suitable for many other optimization tasks, where the quality of a design can be evaluated by various computational approaches. 
 
@@ -31,8 +31,8 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
 ## Preparations for starting an optimization case
 Three different types of files needed to be prepared for performing the optimization.
 1. grow: a python script for the execution of FEM simulations. For complicated cases multiple python scripts can be used, which can be inputted by multiple selection after clicking the corresponding folder icon.
-2. template file: one or more files that contain all the instructions and design parameters for setting up the models of FEM simulations.
-3. object: a python script to define how to evaluate the evolved designs based on the simulation results.
+2. template file: one or more files that contain all the instructions and design parameters for setting up the models of FEM simulations. The names of the design variables, which have be set in the "design variable" part of the GUI, should appear at the right positions of the template file.  
+3. object: a python script to define how to evaluate the evolved designs based on the simulation results, which return the value(s) of fitness against objective function(s) in a tuple.
 
 To be continued
 
