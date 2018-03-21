@@ -66,12 +66,14 @@ class InputVar:
 				labelpos='w', 
 				label_text='max: ',
 				entry_width=14,
+				validate={'validator':'real'},
 				entry_textvariable=self.max)
 		self.Max.grid(row=0, column=1,padx=4)	
 		self.Min= Pmw.EntryField(self.Input,
 				labelpos='w', 
 				label_text='min: ',
 				entry_width=14,
+				validate={'validator':'real'},
 				entry_textvariable=self.min)
 		Pmw.alignlabels([self.Max, self.Min], sticky='e')
 		self.Min.grid(row=1, column=1,padx=4)
@@ -79,6 +81,7 @@ class InputVar:
 				labelpos='w', 
 				label_text='digit:',
 				entry_width=6,
+				validate={'validator':'integer'},
 				entry_textvariable=self.digit)
 		self.Digit.grid(row=0, column=2,padx=4)
 		self.Candidates = Button(self.Input,  text= 'candidates', command=self.setCandidates, state = 'disabled')
