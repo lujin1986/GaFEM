@@ -81,7 +81,7 @@ class InputVar:
 				labelpos='w', 
 				label_text='digit:',
 				entry_width=6,
-				validate={'validator':'integer'},
+				validate={'validator':'numeric', 'min':1},
 				entry_textvariable=self.digit)
 		self.Digit.grid(row=0, column=2,padx=4)
 		self.Candidates = Button(self.Input,  text= 'candidates', command=self.setCandidates, state = 'disabled')
