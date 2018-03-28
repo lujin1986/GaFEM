@@ -17,7 +17,7 @@ class InputVar:
 		self.choice = StringVar()
 		self.choice.set('')
 		self.label = StringVar()
-		self.label.set('')
+		self.label.set('new_variable')
 		self.type = StringVar()
 		self.type.set('continuous')	
 		self.type_ = StringVar()
