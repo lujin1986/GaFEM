@@ -41,7 +41,8 @@ class Control:
 		self.CheckElitism.grid(row=1,column=0, ipadx=5, sticky='w')
 		self.CheckThread = Checkbutton(self.Frame, text = "multi-threads:", variable=self.multithreads, command=self.checkThreadStatus)	
 		self.CheckThread.grid(row=0,column=1, sticky='w')
-		self.InputThread = Entry(self.Frame, width = 11, textvariable=self.threads, state = 'disabled')
+		#self.InputThread = Entry(self.Frame, width = 11, textvariable=self.threads, state = 'disabled')
+		self.InputThread= Pmw.EntryField(self.Frame, entry_width=11, validate={'validator':'numeric', 'min':1}, entry_textvariable=self.threads, entry_state='disabled')
 		self.InputThread.grid(row=0,column=2, sticky='w', padx=2)
 		self.CheckSeed = Checkbutton(self.Frame, text = "seeding:", variable=self.seeding, command=self.checkSeedStatus)	
 		self.CheckSeed.grid(row=1,column=1, sticky='w')
@@ -348,8 +349,8 @@ class Control:
 
 	def checkThreadStatus(self):
 		if self.multithreads.get():
-			self.InputThread.config(state='normal')
-		else: self.InputThread.config(state='disabled')
+			self.InputThread.configure(entry_state='normal')
+		else: self.InputThread.configure(entry_state='disabled')
 
 	def checkSeedStatus(self):
 		if self.seeding.get():
