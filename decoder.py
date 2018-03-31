@@ -253,7 +253,7 @@ class InputVar:
 		self.Digit_= Pmw.EntryField(self.EditDialog.interior(),
 				labelpos='w', 
 				label_text='digit:',
-				validate={'validator':'integer'},
+				validate={'validator':'numeric', 'min':1},
 				entry_width=14,
 				entry_textvariable=self.digit)
 		self.Digit_.pack(side='left')		
