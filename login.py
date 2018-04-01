@@ -107,23 +107,25 @@ class Login:
 		
 	def abqLicense(self):
 		while self.abqLicense_on:
-			try:
-				channel = self.server.open_session()
-				channel.exec_command('cat output')
-				output = channel.makefile('rb', -1).readlines()
-				if output[1] == 'Viewer licenses:\n':
-					for i in output:
-						if 'available.' in i.split():
-							available = int(i.split()[-4])
-						if 'issued:' in i.split():
-							issued = int(i.split()[-1])					
-					total = available+issued
-					self.showLicense.config(text="%d / %d licenses available" % (available, total))				
-					#self.license.set("%d / %d" % (available, total))
-					sleep(5)
-			except:
-				pass 
-			
+			if self.server.is_active():
+				try:
+					channel = self.server.open_session()
+					channel.exec_command('cat output')
+					output = channel.makefile('rb', -1).readlines()
+					if output[1] == 'Viewer licenses:\n':
+						for i in output:
+							if 'available.' in i.split():
+								available = int(i.split()[-4])
+							if 'issued:' in i.split():
+								issued = int(i.split()[-1])					
+						total = available+issued
+						self.showLicense.config(text="%d / %d licenses available" % (available, total))				
+						#self.license.set("%d / %d" % (available, total))
+						sleep(5)
+				except:
+					pass 
+			else:	
+				tkMessageBox.showerror(title='Error', message="The connection with the server has been lost! Please resume the optimization." )
 				
 	def buttonLogout(self):
 		if self.allunits['Control'].ResultWidget and self.allunits['Control'].ResultWidget.switch and self.allunits['Control'].ResultWidget.cluster:
