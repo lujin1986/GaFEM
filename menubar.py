@@ -185,11 +185,11 @@ class Menubar:
 				self.allunits['Control'].elitism.set(0)			
 			if opt['multithreading'][0]:
 				self.allunits['Control'].multithreads.set(1)
-				self.allunits['Control'].InputThread.config(state='normal')
+				self.allunits['Control'].InputThread.configure(entry_state='normal')
 				self.allunits['Control'].threads.set(opt['multithreading'][1])				
 			else:
 				self.allunits['Control'].multithreads.set(0)
-				self.allunits['Control'].InputThread.config(state='disabled')	
+				self.allunits['Control'].InputThread.configure(entry_state='disabled')	
 	
 	
 	def new_file(self):
@@ -223,7 +223,7 @@ class Menubar:
 			self.allunits['Control'].elitism.set(0)			
 			
 			self.allunits['Control'].multithreads.set(0)
-			self.allunits['Control'].InputThread.config(state='disabled')
+			self.allunits['Control'].InputThread.configure(entry_state='disabled')
 			self.File = None	
 
 	def save_file(self):
