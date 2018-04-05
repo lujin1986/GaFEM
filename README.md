@@ -29,11 +29,16 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
       <img src="images/print_results.png" width="700"> 
    
 ## Preparations for starting an optimization case
-Three different types of files needed to be prepared for performing the optimization.
-1. grow: a python script for the execution of FEM simulations. For complicated cases multiple python scripts can be used, which can be inputted by multiple selection after clicking the corresponding folder icon.
-2. template file: one or more files that contain all the instructions and design parameters for setting up the models of FEM simulations. The names of the design variables, which have be set in the "design variable" part of the GUI, should appear at the right positions of the template file.  
-3. object: a python script to define how to evaluate the evolved designs based on the simulation results, which return the value(s) of fitness against objective function(s) in a tuple.
+Three different types of files needed to be prepared for performing the optimization: grow, template and objective files as shown in the "Evaluation" section on the primary user interface.
+1. grow file(s): a python script for the execution of FEM simulations. The script must be named as "grow.py". For complicated cases the script "grow.py" can also call other python scripts for running the simulations, all of which must be inputted either through the entry field with comma seperating different entries or through the multiple selection function by clicking the folder icon. 
+2. template file(s): one or more files that contain all the instructions and design parameters for setting up the models of FEM simulations. The names of the design variables, which have be set in the "design variable" part of the GUI, should appear at the right positions of the template file.  
+3. object file: a python script to define how to evaluate the evolved designs based on the simulation results, which return the value(s) of fitness against objective function(s) in a tuple. The script should be named as objective.py, which should contains a function "objective" in the following form.
 
+```
+def objective(name, phenotype):
+
+	return (objective_1	
+```
 To be continued
 
    
