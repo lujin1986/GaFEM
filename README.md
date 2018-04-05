@@ -37,7 +37,9 @@ Three different types of files needed to be prepared for performing the optimiza
 ```
 def objective(name, phenotype):
 
-	return (objective_1	
+	. . .
+
+	return (fitness_1, fitness_2, ..., fitness_n)	
 ```
 To be continued
 
