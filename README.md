@@ -39,7 +39,9 @@ def grow(name, phenotype):
 
 where the parameter name is a automatically allocated string for each design evolved in the optimization. This string will be associated with the names of automated generated input files for FEM simulations; the parameter phenotype is a dictionary with all the labels of design parameters as keys and the values of the design variables as the corresponding values.
 For complicated cases the script "grow.py" can also call other python scripts for running the simulations, all of which must be inputted either through the entry field with comma seperating different entries or through the multiple selection function by clicking the folder icon. 
+
 2. template file(s): one or more files that contain all the instructions and design parameters for setting up the models of FEM simulations. The names of the design variables, which have be set in the "design variable" part of the GUI, should appear at the right positions of the template file. 
+
 3. object file: a python script to define how to evaluate the evolved designs based on the simulation results, which return the value(s) of fitness against objective function(s) in a tuple. The script should be named as objective.py, which should contain a function "objective" in the following form.
 
 ```
