@@ -218,7 +218,7 @@ def getfitness(templateFiles):
 				stdout.flush()
 				for n, templateFile in enumerate(templateFiles):
 					replacedFile=str(templateFile[1])
-					replacedFile= replacedFile.replace('NAME', name)
+					# replacedFile= replacedFile.replace('NAME', name)
 					for key in phenotype.keys():
 						replacedFile= replacedFile.replace(key, str(phenotype[key]))	
 					if not n:
