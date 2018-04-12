@@ -218,14 +218,11 @@ def getfitness(templateFiles):
 				stdout.flush()
 				for n, templateFile in enumerate(templateFiles):
 					replacedFile=str(templateFile[1])
-					# replacedFile= replacedFile.replace('NAME', name)
+					#replacedFile= replacedFile.replace('NAME', name)
 					for key in phenotype.keys():
 						replacedFile= replacedFile.replace(key, str(phenotype[key]))	
-					if not n:
-						end = templateFile[0].split('.')[1]
-						f1 = open('I%s.%s' % (name, end), 'w')	
-					else:
-						f1 = open('T%s_%s' % (name, templateFile[0]), 'w')
+
+					f1 = open('T%s_%s' % (name, templateFile[0]), 'w')
 					f1.write(replacedFile+'\n')
 					f1.close()
 				print("start growing %s" % name)
@@ -270,7 +267,7 @@ def decoder(individual):
 		if item [1] == "discrete":
 			excess =  2**item[2]-len(item[-2])
 			if integer+1 <= 2*excess:
-				index = integer/2
+				index = integer//2
 			else:
 				index = integer-excess
 			phenotype[item[0]] = item[-2][index]
