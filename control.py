@@ -118,11 +118,17 @@ class Control:
 				else:
 					self.parameters['multithreading'][0].append(0)
 					self.parameters['multithreading'][1].append('')	
-			if not os.path.exists(self.parameters['Case']['WD']):	
-				os.makedirs(self.parameters['Case']['WD'])
-			if not self.restart.get() or not os.path.exists(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name']):
-				if not os.path.exists(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name']):
-					os.makedirs(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+			WD = self.parameters['Case']['WD'].strip()
+			if self.parameters['Case']['WD'] == "current":
+				WD = self.cwd
+			elif not (WD[0]=='/' or WD[1]==':'):
+				WD = os.path.join(self.cwd, WD)
+								
+			if not os.path.exists(WD):	
+				os.makedirs(WD)
+			if not self.restart.get() or not os.path.exists(WD +'/%s' % self.parameters['Case']['name']):
+				if not os.path.exists(WD +'/%s' % self.parameters['Case']['name']):
+					os.makedirs(WD +'/%s' % self.parameters['Case']['name'])
 					self.restart.set(0)
 				else:
 		
@@ -133,14 +139,14 @@ class Control:
 					else:
 						os.chdir(self.cwd)
 						try:
-							shutil.rmtree(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
-							os.makedirs(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+							shutil.rmtree(WD +'/%s' % self.parameters['Case']['name'])
+							os.makedirs(WD +'/%s' % self.parameters['Case']['name'])
 						except:
 							tkMessageBox.showerror(title='Error', message="The folder %s cannot be deleted due to the occupation of some other processes. Please abort all the relevant processes or delete the folder manually and try again." % self.parameters['Case']['name'])
 							savetxt("switch.txt", array([0]))
 							self.Optimize.config(text = "      Start   \nOptimization")
 							return							
-				os.chdir(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+				os.chdir(WD +'/%s' % self.parameters['Case']['name'])
 				if not os.path.exists('main3.py'):
 					shutil.copy(self.cwd+'/main3.py', 'main3.py')
 
@@ -184,7 +190,7 @@ class Control:
 						self.Optimize.config(text = "      Start   \nOptimization")
 						return
 						
-			else: os.chdir(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+			else: os.chdir(WD +'/%s' % self.parameters['Case']['name'])
 			name = "%s.opt" % self.parameters['Case']['name']
 			f = open(name, 'wb')
 			dump(self.parameters, f)
@@ -233,25 +239,35 @@ class Control:
 			self.Results.config(state='normal')
 			if self.allunits['Menubar'].loadres is not None:
 				os.chdir('..')
-				os.rmtree(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+				WD = self.parameters['Case']['WD'].strip()
+				if self.parameters['Case']['WD'] == "current":
+					WD = self.cwd
+				elif not (WD[0]=='/' or WD[1]==':'):
+					WD = os.path.join(self.cwd, WD)
+				os.rmtree(WD +'/%s' % self.parameters['Case']['name'])
 	
 	def results(self):
 		if not self.ResultWidget:
 			if self.allunits['Menubar'].loadres is not None:
 				results = self.allunits['Menubar'].loadres
-				if os.path.exists(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name']):
-					message = 'Old optimization files in the folder %s/%s exist. View the results from result file (.res) needs to recreate this folder. If you press OK, the contents of the folder will be removed.' % (self.parameters['Case']['WD'], self.parameters['Case']['name'])
+				WD = self.parameters['Case']['WD'].strip()
+				if self.parameters['Case']['WD'] == "current":
+					WD = self.cwd
+				elif not (WD[0]=='/' or WD[1]==':'):
+					WD = os.path.join(self.cwd, WD)
+				if os.path.exists(WD+'/%s' % self.parameters['Case']['name']):
+					message = 'Old optimization files in the folder %s/%s exist. View the results from result file (.res) needs to recreate this folder. If you press OK, the contents of the folder will be removed.' % (WD, self.parameters['Case']['name'])
 					ok = tkMessageBox.askokcancel('View results', message)
 					if ok:
 						try:
-							shutil.rmtree(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+							shutil.rmtree(WD+'/%s' % self.parameters['Case']['name'])
 						except:
 							tkMessageBox.showerror(title='Error', message="The folder %s cannot be deleted due to the occupation of some other processes. Please abort all the relevant processes or delete the folder manually and try again." % self.parameters['Case']['name'])
 							return
 					else:
 						return
-				os.makedirs(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
-				os.chdir(self.parameters['Case']['WD']+'/%s' % self.parameters['Case']['name'])
+				os.makedirs(WD+'/%s' % self.parameters['Case']['name'])
+				os.chdir(WD+'/%s' % self.parameters['Case']['name'])
 				if self.parameters['Case']['type'] == 'single-objective':
 					with open("result.txt", 'w') as f:
 						f.write("name; \t values of variables; \t fitness\n")
