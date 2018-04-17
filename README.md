@@ -11,7 +11,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
 
 ## Getting started
 1. Make sure python 3 is installed in the computer.
-2. The following python libraries must be installed: tkinter, matplotlib, numpy, pandas, Pmw, paramiko, PIL, deap.
+2. The following python libraries must be installed: tkinter, matplotlib, numpy, pandas, Pmw, paramiko, PIL (Pillow), deap.
 3. Copy all the files in this repository to your working directory.
 4. Enter your working directory through a command prompt in Window system or a terminal in Linux system and type `python GAGUI.py` to start the software.
 
