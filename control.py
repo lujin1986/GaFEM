@@ -54,6 +54,7 @@ class Control:
 		self.Results.grid(row=0,column=4, rowspan=3, stick = 'e')
 		self.ResultWidget = None
 		self.cwd = os.getcwd()
+		self.wd = self.cwd
 	
 	def pack(self, side='top', fill=None, expand=None, padx=0, pady=0):
 		self.ControlFrame.pack(side=side, fill=fill, expand=expand, padx=padx, pady=pady)		
@@ -123,6 +124,7 @@ class Control:
 				WD = self.cwd
 			elif not (WD[0]=='/' or WD[1]==':'):
 				WD = os.path.join(self.cwd, WD)
+				self.wd = WD
 								
 			if not os.path.exists(WD):	
 				os.makedirs(WD)
@@ -152,8 +154,11 @@ class Control:
 
 				if self.parameters['constraint'][0]:
 					if not os.access(os.path.split(self.parameters['constraint'][1])[1], os.R_OK):
+						file = self.parameters['constraint'][1].strip()
+						if not (file[0]=='/' or file[1]==':'):
+							file = os.path.join(self.wd, file)
 						try:
-							shutil.copy(self.parameters['constraint'][1], os.path.split(self.parameters['constraint'][1])[1])
+							shutil.copy(file, os.path.split(file)[1])
 						except:
 							tkMessageBox.showerror(title='Error', message="The file '%' does not exist." % self.parameters['constraint'][1])
 							savetxt("switch.txt", array([0]))
@@ -161,7 +166,10 @@ class Control:
 							return
 				for file in self.parameters['grow'].split(','):
 					file = file.strip()
+					if not (file[0]=='/' or file[1]==':'):
+						file = os.path.join(self.wd, file)
 					if not os.access(os.path.split(file)[1], os.R_OK):
+
 						#try:
 						shutil.copy(file, os.path.split(file)[1])
 						"""
@@ -173,6 +181,8 @@ class Control:
 						"""
 				for file in self.parameters['template'].split(','):
 					file = file.strip()
+					if not (file[0]=='/' or file[1]==':'):
+						file = os.path.join(self.wd, file)
 					if not os.access(os.path.split(file)[1], os.R_OK):
 						try:
 							shutil.copy(file, os.path.split(file)[1])
@@ -182,10 +192,13 @@ class Control:
 							self.Optimize.config(text = "      Start   \nOptimization")
 							return
 				if not os.access(os.path.split(self.parameters['objective'])[1], os.R_OK):
+					file = self.parameters['objective'].strip()
+					if not (file[0]=='/' or file[1]==':'):
+						file = os.path.join(self.wd, file)
 					try:
 						shutil.copy(self.parameters['objective'], os.path.split(self.parameters['objective'])[1])
 					except:
-						tkMessageBox.showerror(title='Error', message="The file '%' does not exist." % file)
+						tkMessageBox.showerror(title='Error', message="The file '%s' does not exist." % file)
 						savetxt("switch.txt", array([0]))
 						self.Optimize.config(text = "      Start   \nOptimization")
 						return
@@ -244,6 +257,7 @@ class Control:
 					WD = self.cwd
 				elif not (WD[0]=='/' or WD[1]==':'):
 					WD = os.path.join(self.cwd, WD)
+					self.wd = WD
 				os.rmtree(WD +'/%s' % self.parameters['Case']['name'])
 	
 	def results(self):
@@ -255,6 +269,7 @@ class Control:
 					WD = self.cwd
 				elif not (WD[0]=='/' or WD[1]==':'):
 					WD = os.path.join(self.cwd, WD)
+					self.wd = WD
 				if os.path.exists(WD+'/%s' % self.parameters['Case']['name']):
 					message = 'Old optimization files in the folder %s/%s exist. View the results from result file (.res) needs to recreate this folder. If you press OK, the contents of the folder will be removed.' % (WD, self.parameters['Case']['name'])
 					ok = tkMessageBox.askokcancel('View results', message)
