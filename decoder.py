@@ -163,11 +163,13 @@ class InputVar:
 				tkMessageBox.showerror(title='Error', message='The label must be unique.')
 			else:
 				if a[1] == 'continuous':
-					if a[2] and a[3] and a[4]:
-						self.variableList.append(a)		
-						self.view_records()
-					else:
+					if not (a[2] and a[3] and a[4]):
 						tkMessageBox.showerror(title='Error', message='The fields for digit, max and min can not be empty.')
+					elif a[3] == a[4]:
+						tkMessageBox.showerror(title='Error', message='The max and min can not be the same.')
+					else:
+						self.variableList.append(a)		
+						self.view_records()						
 				else:
 					if len(a[5]) >= 2:
 						self.variableList.append(a)		
