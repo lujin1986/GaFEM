@@ -196,7 +196,7 @@ class Control:
 					if not (file[0]=='/' or file[1]==':'):
 						file = os.path.join(self.wd, file)
 					try:
-						shutil.copy(self.parameters['objective'], os.path.split(self.parameters['objective'])[1])
+						shutil.copy(file, os.path.split(file)[1])
 					except:
 						tkMessageBox.showerror(title='Error', message="The file '%s' does not exist." % file)
 						savetxt("switch.txt", array([0]))
