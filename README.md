@@ -16,7 +16,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
 4. Enter your working directory through a command prompt in Window system or a terminal in Linux system and type `python GAGUI.py` to start the software.
 
 ## Using the graphic user interface
-1. The primary user interface
+1. The main user interface
 
    <img src="images/main_interface.png" width="1200"> 
    
@@ -45,6 +45,13 @@ def objective(name, phenotype):
 
 	return (fitness_1, fitness_2, ..., fitness_n)	# return (fitness, ) for single objective optimization
 ```
+
+## Run the demo
+1. Click File in the menubar, then click open
+2. Select the file "multi-objective.opt" in the folder "demo/multi-objective" from the dialogue window popped out.
+3. Click the button "Start optimization"
+
+
 To be continued
 
    
