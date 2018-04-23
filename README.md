@@ -47,9 +47,9 @@ def objective(name, phenotype):
 ```
 
 ## Run the demo
-1. Click File in the menubar, then click open
+1. Click File in the menubar, then click open.
 2. Select the file "multi-objective.opt" in the folder "demo/multi-objective" from the dialogue window popped out.
-3. Click the button "Start optimization"
+3. Click the button "Start optimization".
 
 
 To be continued
