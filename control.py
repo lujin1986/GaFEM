@@ -215,7 +215,7 @@ class Control:
 				self.ResultWidget.newwindow.destroy()
 				if self.ResultWidget.PrintR:
 					self.ResultWidget.PrintR.destroy()
-			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.allunits['Login'] )
+			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.wd, self.allunits['Login'] )
 			self.ResultWidget.newwindow.protocol("WM_DELETE_WINDOW", self.closeRW)
 			self.Results.config(state='disabled')
 		
@@ -304,7 +304,7 @@ class Control:
 								f.write("\t %s\n" % str(list(results[i][objectives[-1][0]])[k]))
 
 
-			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.allunits['Login'], viewresults=True )
+			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.wd, self.allunits['Login'], viewresults=True )
 			self.ResultWidget.newwindow.protocol("WM_DELETE_WINDOW", self.closeRW)
 				
 
