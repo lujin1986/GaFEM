@@ -27,7 +27,7 @@ from PIL import Image, ImageTk
 
 	
 class Result:
-	def __init__(self, parent, parameters, control, restart, cwd, Login, viewresults = None):
+	def __init__(self, parent, parameters, control, restart, cwd, wd, Login, viewresults = None):
 		self.parent = parent
 		self.viewresults = viewresults
 		self.parameters = parameters		
@@ -54,6 +54,7 @@ class Result:
 		self.descending.set('True')
 		self.sortedby = StringVar()
 		self.sortedby.set('name')
+		self.wd = wd
 
 
 		self.style = Style()
@@ -242,7 +243,7 @@ class Result:
 							results.append(result)
 					self.save['Setup']=self.parameters
 					self.save['Results']=results
-					with open(self.parameters['Case']['WD']+'/%s.res' %self.parameters['Case']['name'], 'wb') as f:
+					with open(self.wd+'/%s.res' %self.parameters['Case']['name'], 'wb') as f:
 						dump(self.save, f)
 				
 			try:
