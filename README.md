@@ -51,6 +51,7 @@ def objective(name, phenotype):
 2. Select the file "multi-objective.opt" in the folder "demo/multi-objective" from the dialogue window popped out.
 3. Click the button "Start Optimization".
 
+This demo shows a very simple case of multi-objective optimization with only two design objectives and two design variables, which originates from the benchmark problem "DTLZ2" in the paper of Deb et al. (2002).
 
 To be continued
 
