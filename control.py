@@ -62,7 +62,13 @@ class Control:
 	def start(self):
 		if self.Optimize.cget('text') == "      Start   \nOptimization":
 			self.parameters['Case']['name'] = self.allunits['Case'].name.get()			
-			self.parameters['Case']['WD'] = self.allunits['Case'].WD.get()	
+			self.parameters['Case']['WD'] = self.allunits['Case'].WD.get()
+			if not self.parameters['Case']['name']:
+				tkMessageBox.showerror(title='Error', message="The name of the optimization case cannot be empty.")
+				return
+			if not self.parameters['Case']['WD']:
+				tkMessageBox.showerror(title='Error', message="The working directory (WD) of the optimization case cannot be empty.")
+				return
 			self.parameters['Case']['type'] = self.allunits['Case'].type.get()
 			if not self.parameters['GA parameters']:				
 				for key, Var in zip(['population size', 'max. number of generations', 'tournament size', 'type of crossover', 
@@ -70,6 +76,9 @@ class Control:
 						25, 2, 'one-point', 0.6, 0.2, 0.05]):
 					self.parameters['GA parameters'][key]=Var			
 			self.parameters['design variables'] = self.allunits['InputVar'].variableList
+			if not self.parameters['design variables']:			
+				tkMessageBox.showerror(title='Error', message="At least one design variable that is to be optimized should be defined.")
+				return			
 			if self.allunits['InputVar'].checkb.get():
 				if self.parameters['constraint']:
 					self.parameters['constraint'][0] = 1
@@ -145,8 +154,6 @@ class Control:
 							os.makedirs(WD +'/%s' % self.parameters['Case']['name'])
 						except:
 							tkMessageBox.showerror(title='Error', message="The folder %s cannot be deleted due to the occupation of some other processes. Please abort all the relevant processes or delete the folder manually and try again." % self.parameters['Case']['name'])
-							savetxt("switch.txt", array([0]))
-							self.Optimize.config(text = "      Start   \nOptimization")
 							return							
 				os.chdir(WD +'/%s' % self.parameters['Case']['name'])
 				if not os.path.exists('main3.py'):
@@ -161,8 +168,6 @@ class Control:
 							shutil.copy(file, os.path.split(file)[1])
 						except:
 							tkMessageBox.showerror(title='Error', message="The file '%' does not exist." % self.parameters['constraint'][1])
-							savetxt("switch.txt", array([0]))
-							self.Optimize.config(text = "      Start   \nOptimization")
 							return
 				for file in self.parameters['grow'].split(','):
 					file = file.strip()
@@ -170,15 +175,13 @@ class Control:
 						file = os.path.join(self.wd, file)
 					if not os.access(os.path.split(file)[1], os.R_OK):
 
-						#try:
-						shutil.copy(file, os.path.split(file)[1])
-						"""
+						try:
+							shutil.copy(file, os.path.split(file)[1])
+
 						except:
 							tkMessageBox.showerror(title='Error', message="The file '%s' does not exist." % file)
-							savetxt("switch.txt", array([0]))
-							self.Optimize.config(text = "      Start   \nOptimization")
 							return
-						"""
+
 				for file in self.parameters['template'].split(','):
 					file = file.strip()
 					if not (file[0]=='/' or file[1]==':'):
@@ -187,8 +190,6 @@ class Control:
 						try:
 							shutil.copy(file, os.path.split(file)[1])
 						except:
-							tkMessageBox.showerror(title='Error', message="The file '%' does not exist." % file)
-							savetxt("switch.txt", array([0]))
 							self.Optimize.config(text = "      Start   \nOptimization")
 							return
 				if not os.access(os.path.split(self.parameters['objective'])[1], os.R_OK):
@@ -199,8 +200,6 @@ class Control:
 						shutil.copy(file, os.path.split(file)[1])
 					except:
 						tkMessageBox.showerror(title='Error', message="The file '%s' does not exist." % file)
-						savetxt("switch.txt", array([0]))
-						self.Optimize.config(text = "      Start   \nOptimization")
 						return
 						
 			else: os.chdir(WD +'/%s' % self.parameters['Case']['name'])
