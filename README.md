@@ -52,8 +52,12 @@ def objective(name, phenotype):
 3. Click the button "Start Optimization".
 
 This demo shows a very simple case of multi-objective optimization with only two design objectives and two design variables, which originates from the benchmark problem "DTLZ2" in the paper of Deb et al. (2002):
+
 K. Deb, L. Thiele, M. Laumanns and E. Zitzler. Scalable Multi-Objective Optimization Test Problems. CEC 2002, p. 825 - 830, IEEE Press, 2002.
+
 The theoretical Pareto front of this optimization problem should have a spherical shape with a radius of 1 centered with origin.
+
+After running the optimization, a file named "case2.res" will be generated. The file contains all the designs evolved in the optimization, which can be viewed conveniently at a later time by using the GUI of GaFEM.
 
 To be continued
 
