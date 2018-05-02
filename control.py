@@ -160,29 +160,38 @@ class Control:
 					shutil.copy(self.cwd+'/main3.py', 'main3.py')
 
 				if self.parameters['constraint'][0]:
-					if not os.access(os.path.split(self.parameters['constraint'][1])[1], os.R_OK):
-						file = self.parameters['constraint'][1].strip()
-						if not (file[0]=='/' or file[1]==':'):
-							file = os.path.join(self.wd, file)
+					file = self.parameters['constraint'][1].strip()
+					if not file:
+						tkMessageBox.showerror(title='Error', message="An input for the constraint file is expected.")
+						return
+					if not (file[0]=='/' or file[1]==':'):
+						file = os.path.join(self.wd, file)
+					if not os.access(os.path.split(file)[1], os.R_OK):
 						try:
 							shutil.copy(file, os.path.split(file)[1])
 						except:
 							tkMessageBox.showerror(title='Error', message="The file '%' does not exist." % self.parameters['constraint'][1])
 							return
-				for file in self.parameters['grow'].split(','):
+				files = self.parameters['grow'].split(',')
+				if not sum([True if file else False for file in files]):
+					tkMessageBox.showerror(title='Error', message="The input for grow file cannot be empty.")
+					return	
+				for file in files:
 					file = file.strip()
 					if not (file[0]=='/' or file[1]==':'):
 						file = os.path.join(self.wd, file)
 					if not os.access(os.path.split(file)[1], os.R_OK):
-
 						try:
 							shutil.copy(file, os.path.split(file)[1])
 
 						except:
 							tkMessageBox.showerror(title='Error', message="The file '%s' does not exist." % file)
 							return
-
-				for file in self.parameters['template'].split(','):
+				files = self.parameters['template'].split(',')
+				if not sum([True if file else False for file in files]):
+					tkMessageBox.showerror(title='Error', message="The input for template file cannot be empty.")
+					return
+				for file in files:
 					file = file.strip()
 					if not (file[0]=='/' or file[1]==':'):
 						file = os.path.join(self.wd, file)
@@ -192,10 +201,13 @@ class Control:
 						except:
 							self.Optimize.config(text = "      Start   \nOptimization")
 							return
-				if not os.access(os.path.split(self.parameters['objective'])[1], os.R_OK):
-					file = self.parameters['objective'].strip()
-					if not (file[0]=='/' or file[1]==':'):
-						file = os.path.join(self.wd, file)
+				file = self.parameters['objective'].strip()
+				if not file:
+					tkMessageBox.showerror(title='Error', message="The input for objective file cannot be empty.")
+					return
+				if not (file[0]=='/' or file[1]==':'):
+					file = os.path.join(self.wd, file)
+				if not os.access(os.path.split(file)[1], os.R_OK):				
 					try:
 						shutil.copy(file, os.path.split(file)[1])
 					except:
