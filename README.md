@@ -22,7 +22,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
    
 1. Setting the parameters for optimization (Set -> GA Parameters)
 
-   <img src="images/GA_parameters.JPG" width="300"> 
+   <img src="images/GA_parameters.JPG" width="250"> 
    
 3. Monitoring the optimization process
 
