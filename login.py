@@ -107,9 +107,9 @@ class Login:
 		
 	def abqLicense(self):
 		while self.abqLicense_on:
-			if self.server.is_active():
-				try:
-					channel = self.server.open_session()
+			try: 
+				channel = self.server.open_session()
+				try:		
 					channel.exec_command('cat output')
 					output = channel.makefile('rb', -1).readlines()
 					if output[1] == 'Viewer licenses:\n':
@@ -124,8 +124,15 @@ class Login:
 						sleep(5)
 				except:
 					pass 
-			else:	
+			except:	
 				tkMessageBox.showerror(title='Error', message="The connection with the server has been lost! Please resume the optimization." )
+				self.lgobutton.config(state='disabled')
+				self.lgibutton.config(state='normal')
+				self.abqLicense_on=False
+				self.server.close()
+				self.showLicense.config(text="--")
+				self.radios[1].config(state='disabled')		
+				self.radio_var.set(0)
 				
 	def buttonLogout(self):
 		if self.allunits['Control'].ResultWidget and self.allunits['Control'].ResultWidget.switch and self.allunits['Control'].ResultWidget.cluster:
