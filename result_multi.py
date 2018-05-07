@@ -77,6 +77,9 @@ class Result:
 		self.TBFrame.pack(side='top', fill='both', expand=1)
 		self.TextBox = Text(self.TBFrame, fg='white', bg='black',  wrap='word', height = 15)
 		self.TextBox.pack(side='left',fill='both', expand=1)
+		self.TextBox.tag_configure('green', foreground='green')
+		self.TextBox.tag_configure('yellow', foreground='yellow')
+		self.TextBox.tag_configure('red', foreground='red')
 		self.ScrollBar = Scrollbar(self.TBFrame, command=self.TextBox.yview)
 		self.ScrollBar.pack(side='right', fill='y')
 		self.TextBox['yscrollcommand'] = self.ScrollBar.set
@@ -215,8 +218,9 @@ class Result:
 			self.switch=0
 			self.control.config(text="      Start   \nOptimization")
 			if error:
-				#Sself.TextBox.config(fg='red')
-				self.TextBox.insert(END, 'The optimization process was interrupted unexpectedly.\n')
+				#self.TextBox.config(fg='red')
+				self.TextBox.insert(END, 'The optimization process was interrupted unexpectedly.\n', 'red')
+				self.TextBox.see(END)	
 				self.newwindow.title('%s optimization: %s - Error' % (self.parameters['Case']['type'].capitalize(), self.parameters['Case']['name']))
 			else:
 				#self.TextBox.config(fg='green')
@@ -225,13 +229,13 @@ class Result:
 					self.ProgressBar['value'] = self.progress
 				if self.progress < 100:
 					try:
-						self.TextBox.insert(END, 'The optimization process has been stopped.\n')
+						self.TextBox.insert(END, 'The optimization process has been stopped.\n', 'yellow')
 						self.TextBox.see(END)	
 						self.newwindow.title('%s optimization: %s - stopped' % (self.parameters['Case']['type'].capitalize(), self.parameters['Case']['name']))		
 					except:
 						pass
 				else:
-					self.TextBox.insert(END, 'The optimization process has been completed!\n')
+					self.TextBox.insert(END, 'The optimization process has been completed!\n', 'green')
 					self.TextBox.see(END)	
 					self.newwindow.title('%s optimization: %s - completed' % (self.parameters['Case']['type'].capitalize(), self.parameters['Case']['name']))
 					if self.parameters['Case']['type'] == 'single-objective':
