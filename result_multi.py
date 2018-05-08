@@ -9,11 +9,6 @@ import os, sys
 import tkinter.messagebox as tkMessageBox
 import Pmw
 import paramiko
-try:
-	plt.style.use('ggplot')
-except:
-	pass
-import matplotlib.animation as animation
 from matplotlib.figure import Figure
 from time import sleep
 from datetime import datetime
@@ -24,7 +19,7 @@ import shutil
 from pickle import dump
 from PIL import Image, ImageTk
 
-
+plt.style.use('ggplot')
 	
 class Result:
 	def __init__(self, parent, parameters, control, restart, cwd, wd, Login, viewresults = None):
@@ -55,22 +50,17 @@ class Result:
 		self.sortedby = StringVar()
 		self.sortedby.set('name')
 		self.wd = wd
-
-
 		self.style = Style()
 		self.style.configure('arrow.TButton', borderwidth=0.01)
-		try:
-			self.f = Figure() #figsize=(5,4), dpi=100
-			self.a = self.f.add_subplot(111)
-		except:
-			pass
+		self.f = Figure() #figsize=(5,4), dpi=100
+		self.a = self.f.add_subplot(111)
+
 		self.newwindow = Toplevel(parent)
 		if self.viewresults:
 			self.newwindow.title('Optimization results for %s optimization: %s' % (self.parameters['Case']['type'], self.parameters['Case']['name']))	
 		else:		
 			self.newwindow.title('%s optimization: %s - in progress...' % (self.parameters['Case']['type'].capitalize(), self.parameters['Case']['name']))	
 
-		# a tk.DrawingArea
 		self.ConsoleFrame = Frame(self.newwindow)
 		self.ConsoleFrame.pack(side='top')
 		self.TBFrame=Frame(self.ConsoleFrame)
@@ -106,7 +96,6 @@ class Result:
 			imageR = Image.open(cwd+'/images/ButtonR.jpg')
 			imageR = imageR.resize((16,16), Image.ANTIALIAS)
 			self.imageR = ImageTk.PhotoImage(imageR)
-
 			self.AxisFrame = Frame(self.ConsoleFrame)
 			self.AxisFrame.pack(side='top', fill='both', pady=5, expand=1)
 			Label(self.AxisFrame, text="vertical axis:").pack(side='left', anchor='e')
@@ -135,15 +124,12 @@ class Result:
 			self.ButtonResult.pack(side='right')
 		self.PlotFrame = Frame(self.ConsoleFrame)
 		self.PlotFrame.pack(side='top', fill='both', expand=1)
-		try:
-			self.canvas = FigureCanvasTkAgg(self.f, master=self.PlotFrame)
-			self.canvas.show()
-			self.canvas.get_tk_widget().pack(side='top',  expand=1)
-			toolbar = NavigationToolbar2TkAgg(self.canvas, self.PlotFrame)
-			toolbar.update()
-			self.canvas._tkcanvas.pack(side='top',  expand=1)
-		except:
-			pass
+		self.canvas = FigureCanvasTkAgg(self.f, master=self.PlotFrame)
+		self.canvas.show()
+		self.canvas.get_tk_widget().pack(side='top',  expand=1)
+		toolbar = NavigationToolbar2TkAgg(self.canvas, self.PlotFrame)
+		toolbar.update()
+		self.canvas._tkcanvas.pack(side='top',  expand=1)
 
 		t_runscript = Thread(target=self.runscript)
 		t_output = Thread(target=self.readoutput)
@@ -151,9 +137,6 @@ class Result:
 		t_runscript.start()
 		t_output.start()
 		t_plot.start()
-
-
-
 
 
 	def runscript(self):
@@ -211,9 +194,7 @@ class Result:
 				
 				channel.exec_command('cd optimization; rm -fr %s' % self.remoteFolder)
 				if channel.recv_exit_status()==1:
-					tkMessageBox.showerror(title='Error', message="The removal of intermediate files on the cluster that were generated during the optimization is unsuccessful. Please remove those files manually.")
-				
-	
+					tkMessageBox.showerror(title='Error', message="The removal of intermediate files on the cluster that were generated during the optimization is unsuccessful. Please remove those files manually.")	
 			sleep(1)
 			self.switch=0
 			self.control.config(text="      Start   \nOptimization")
@@ -257,9 +238,6 @@ class Result:
 					self.TextBox.see(END)	
 			except: pass
 						
-	
-
-
 		
 	def readoutput(self):
 		if not self.viewresults:
@@ -380,8 +358,7 @@ class Result:
 							break
 				if self.viewresults:
 					self.switch = 0
-				sleep(1)
-				
+				sleep(1)				
 
 		else:
 			flag = 1
@@ -668,8 +645,6 @@ class Result:
 	def dismiss(self):
 		self.PrintR.destroy()
 		self.PrintR=None
-
-		
 		
 
 	def replot(self):
