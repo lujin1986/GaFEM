@@ -125,7 +125,8 @@ class Login:
 				except:
 					pass 
 			except:	
-				tkMessageBox.showerror(title='Error', message="The connection with the server has been lost! Please resume the optimization." )
+				tkMessageBox.showerror(title='Error', message="The connection with the server has been lost!." )
+				self.allunits['Control'].start()
 				self.lgobutton.config(state='disabled')
 				self.lgibutton.config(state='normal')
 				self.abqLicense_on=False
