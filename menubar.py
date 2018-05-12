@@ -46,10 +46,25 @@ class Menubar:
 		menu_bar.add_cascade(label='Set', menu=set_menu)
 		
 		about_menu = Menu(menu_bar, tearoff=0)
-		about_menu.add_command(label='About')
+		about_menu.add_command(label='About', command=self.about)
 		about_menu.add_command(label='Help')
 		menu_bar.add_cascade(label='About', menu=about_menu)
 		parent.config(menu=menu_bar)	
+		
+	def about(self):
+		self.About=Toplevel(self.parent)
+		self.About.title("Evaluated individuals")
+		AboutFrame = Frame(self.About)
+		AboutFrame.pack()
+		Author = Label(AboutFrame, text='Made by: Jin Lu')
+		Author.pack()
+		Email = Label(AboutFrame, text='E-Mail: jin.lu86@yahoo.com')
+		Email.pack()
+		Dismiss = Button(AboutFrame, text='Dismiss', command=self.dismiss)
+		Dismiss.pack()
+		
+	def dismiss(self):
+		self.About.destroy()
 	
 	def setGApara(self):
 		widgets = []
