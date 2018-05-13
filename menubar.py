@@ -5,6 +5,8 @@ import pickle
 import tkinter.filedialog as tkFileDialog
 import tkinter.messagebox as tkMessageBox
 from set_obj import SetObj
+from webbrowser import open_new
+
 class Menubar:
 	def __init__(self, parent, parameters, allunits):
 		parent.__init__
@@ -47,7 +49,7 @@ class Menubar:
 		
 		about_menu = Menu(menu_bar, tearoff=0)
 		about_menu.add_command(label='About', command=self.about)
-		about_menu.add_command(label='Help')
+		about_menu.add_command(label='Help', command=self.help)
 		menu_bar.add_cascade(label='About', menu=about_menu)
 		parent.config(menu=menu_bar)	
 		
@@ -65,6 +67,9 @@ class Menubar:
 		
 	def dismiss(self):
 		self.About.destroy()
+		
+	def help(self):
+		open_new('https://github.com/lujin1986/GaFEM/blob/master/README.md')
 	
 	def setGApara(self):
 		widgets = []
