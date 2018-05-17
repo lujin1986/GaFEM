@@ -49,6 +49,7 @@ def objective(name, phenotype):
 
 	return (fitness_1, fitness_2, ..., fitness_n)	# return (fitness, ) for single objective optimization
 ```
+It should be noted that by default the optimization algorithm will try to maximize the fitness(es) defined in the objective function. If you would like to minimize an objective, just simply add a minus sign to convert the minimization into maximization.
 
 ## Run the demo
 1. Click File in the menubar, then click open.
