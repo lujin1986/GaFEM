@@ -52,8 +52,10 @@ def objective(name, phenotype):
 It should be noted that by default the optimization algorithm will try to maximize the fitness(es) defined in the objective function. If you would like to minimize an objective, just simply add a minus sign to convert the minimization into maximization.
 
 ## Run the demo
-The folder demo contain two simplified cases for single- and multi-objective optimizations respectively, which can be further modified for real case applications.
+The folder demo contains two simplified cases for single- and multi-objective optimizations respectively, which can be further modified for real case implementations.
+
 To run the demo:
+
 1. Click File in the menubar, then click open.
 2. Select the .opt file ("single-objective" or "multi-objective.opt") from the folder "demo/single-objective" or "demo/multi-objective" from the dialogue window popped out.
 3. Click the button "Start Optimization".
