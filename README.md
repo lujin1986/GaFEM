@@ -52,7 +52,7 @@ def objective(name, phenotype):
 It should be noted that by default the optimization algorithm will try to maximize the fitness(es) defined in the objective function. If you would like to minimize an objective, just simply add a minus sign to convert the minimization into maximization.
 
 ## Run the demo
-The folder demo contains two simplified cases for single- and multi-objective optimizations respectively, which can be further modified for real case implementations. In both cases, the grow.py files contain only empty functions. Thus, no FEM models will be generated and no Simulations will be run automatically. The evaluation with respective to objectives are based on some simple mathematic functions in these demos. 
+The folder demo contains two simplified cases for single- and multi-objective optimizations respectively, which can be further modified for real case implementations. In both cases, the grow.py files contain only empty functions. Thus, no FEM models will be generated and no Simulations will be run automatically. The evaluation with respective to design objectives are based on some simple mathematic functions in these demos. 
 
 To run the demo:
 
