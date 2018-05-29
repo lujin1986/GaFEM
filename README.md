@@ -20,7 +20,7 @@ GaFEM is a software, which initially aims at coupling genetic algorithm with FEM
 
    <img src="images/main_interface.png" width="1200"> 
    
- As shown in the above figure, firstly a name and the working directory (WD) needs to be given for this optimization run in the "Case" section. Both absolute and relative paths (with respect to the path of the folder where this software is located) can be used in defining the WD. By typing in "current" in the entry field of WD, one can conveniently define the folder that contains this software as the working directory.
+As shown in the above figure, firstly a name and a working directory (WD) needs to be given in the "Case" section for each optimization run. Both absolute and relative paths (with respect to the path of the folder where this software is located) can be used in defining the WD. By typing in "current" in the entry field of WD, one can conveniently define the folder that contains this software as the working directory.
  
 1. Setting the parameters for optimization (Set -> GA Parameters)
 
