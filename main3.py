@@ -35,6 +35,7 @@ if parameters['Case']['type'] == "single-objective":
 else:
 	Multi = 1
 	objectives = parameters['obj_setting']
+	
 Nind=int(parameters['GA parameters']['population size'])          # number of individuals in the population
 Inddigs = int(log(Nind, 10))+1
 NGEN= int(parameters['GA parameters']['max. number of generations'])           # maximum number of generation
@@ -45,6 +46,7 @@ indpb = float(parameters['GA parameters']['mutation rate (allele)'])
 tournsize = int(parameters['GA parameters']['tournament size'])
 typeCrossover = parameters['GA parameters']['type of crossover']
 elitism = parameters['elitism']
+
 if parameters['multithreading'][0]:
 	ths = int(parameters['multithreading'][1]) # number of threads
 else:
@@ -54,6 +56,7 @@ templates = []
 for template in parameters['template'].split(','):
 	if template:
 		templates.append(path.split(template)[1])	
+		
 variableList = parameters['design variables']
 flag_constraint = parameters['constraint'][0]
 
@@ -62,16 +65,13 @@ if parameters['seed'][0]:
 else:
 	seed = []
 
-
 switch = 1
 genotype =[]
 valid_ind = []
-
 result_GEN = []
 err1 = 0
 err2 = 0
 
-	
 
 def setGenotype(variableList):
 	global genotype
@@ -91,14 +91,15 @@ def setGenotype(variableList):
 		genotype.append(copy)
 		initial+=digit
 	return initial		
-		
+
+
 def individual_():
 	""" Method to randomly generate a genotype""" 
 	
 	individual = toolbox.get_indi()
 	return individual
 
-	
+
 def population_(n):
 	"""Method to generate a randomized population with no duplication"""
 	
@@ -120,7 +121,6 @@ def population_(n):
 						flag = 1
 			pop.append(new)
 	return pop	
-	
 
 
 def save_result_GEN(result_GEN):
@@ -168,11 +168,7 @@ def save_final_GEN(pop, g):
 			for fitness in pop[i].fitness.values[:-1]:
 				f.write("\t %s; " % str(fitness))
 			f.write("\t %s\n" % str(pop[i].fitness.values[-1]))
-
-
 			
-	
-
 
 def getfitness(templateFiles):
 	"""Automated generation of FEM models and execuation of simulations"""
@@ -254,7 +250,6 @@ def getfitness(templateFiles):
 						print("The evaluation of %s bas completed at %s" % (name, datetime.now()))
 						stdout.flush()
 
-
 		
 def decoder(individual):
 	global genotype
@@ -278,13 +273,10 @@ def decoder(individual):
 		phenotype = constraint(phenotype)
 	return phenotype
 			
-	
-	
-def history(pop, g, append = True):
 
+def history(pop, g, append = True):
 	"""record the present generation and its relevant statistics
-	   in plain text file """
-	   
+	   in plain text file """	   
 	# Gather all the fitnesses and phenotypes in one list
 	fits = [ind.fitness.values[0] for ind in pop]
 	phenotypes = [str(decoder(ind)) for ind in pop]
@@ -295,7 +287,6 @@ def history(pop, g, append = True):
 	std = abs(sum2 / length - mean**2)**0.5
 	ind = [i for i, j in enumerate(fits) if j==max(fits)]    
 	fittest = pop[ind[0]]
-	
 	if append:
 		mode = 'a'
 	else:
@@ -315,7 +306,6 @@ def history(pop, g, append = True):
 		history.write("phenotype of fittest individual: %s\n" % fittest) 
 		print("genotype of fittest individual: %s" % decoder(fittest))
 		history.write("genotype of fittest individual: %s\n" % decoder(fittest)) 
-
 	return fittest
 	
 	
@@ -379,12 +369,7 @@ def main(restart, elitism, seed):
 				result_GEN.append([name, genotype, fitness])
 			for index in range(len(offspring)):
 				indList.put(["%s_%s" % (str(initGEN).zfill(Gendigs), str(index).zfill(Inddigs)), offspring[index]])
-
-	
-			
-
-		print("restart at generation %d " % initGEN)
-			
+		print("restart at generation %d " % initGEN)			
 		parallelization(indList)
 		if not switch:
 			exit()
@@ -408,9 +393,6 @@ def main(restart, elitism, seed):
 			f.close()
 			fittest = history(pop, initGEN)
 			initGEN = initGEN+1
-
-
-			
 
 	for g in range(initGEN,NGEN):	
 		if g==0:
@@ -436,8 +418,7 @@ def main(restart, elitism, seed):
 			if not Multi:
 				fittest = history(pop, g, append=False)
 			else:
-				save_final_GEN(pop, g)	
-		
+				save_final_GEN(pop, g)		
 		else:
 			print("Generation %d is being generated... at %s." % (g, datetime.now()))
 			if Multi:
@@ -459,9 +440,7 @@ def main(restart, elitism, seed):
 			for mutant in offspring:
 				if random() < MUTPB:
 					toolbox.mutate(mutant)
-					del mutant.fitness.values
-					
-
+					del mutant.fitness.values				
 			f = open("offspring_Gen_%d.txt" % g, 'wb')
 			dump(offspring, f)
 			f.close()
@@ -485,8 +464,7 @@ def main(restart, elitism, seed):
 				save_result_GEN(result_GEN)
 			f = open("population_Gen_%d.txt" % g, 'wb')
 			dump(pop, f)
-			f.close()
-	
+			f.close()	
 	savetxt("switch.txt", array([0]))
 	#sleep(2)
 	archive()
@@ -515,6 +493,8 @@ def archive():
 			save_result_GEN(result_GEN)
 		old = new
 		sleep(2)
+		
+		
 if Multi:
 	weights = [i[1] for i in objectives]
 	creator.create("FitnessMax", base.Fitness, weights=tuple(weights))
