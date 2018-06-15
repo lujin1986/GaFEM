@@ -21,6 +21,7 @@ from PIL import Image, ImageTk
 
 plt.style.use('ggplot')
 	
+	
 class Result:
 	def __init__(self, parent, parameters, control, restart, cwd, wd, Login, viewresults = None):
 		self.parent = parent
@@ -54,13 +55,11 @@ class Result:
 		self.style.configure('arrow.TButton', borderwidth=0.01)
 		self.f = Figure() #figsize=(5,4), dpi=100
 		self.a = self.f.add_subplot(111)
-
 		self.newwindow = Toplevel(parent)
 		if self.viewresults:
 			self.newwindow.title('Optimization results for %s optimization: %s' % (self.parameters['Case']['type'], self.parameters['Case']['name']))	
 		else:		
 			self.newwindow.title('%s optimization: %s - in progress...' % (self.parameters['Case']['type'].capitalize(), self.parameters['Case']['name']))	
-
 		self.ConsoleFrame = Frame(self.newwindow)
 		self.ConsoleFrame.pack(side='top')
 		self.TBFrame=Frame(self.ConsoleFrame)
@@ -138,7 +137,6 @@ class Result:
 		t_output.start()
 		t_plot.start()
 
-
 	def runscript(self):
 		if not self.viewresults:
 			command = ['python', 'main3.py', str(self.restart), "%s" % self.parameters['Case']['name']]
@@ -179,19 +177,14 @@ class Result:
 				self.stdout = self.process.stdout
 				self.stderr = self.process.stderr
 				check = self.process.poll
-				status = check
-			
+				status = check		
 			while check() is False or check() is None:
 				sleep(1)
-
 			error = status()
 			savetxt("switch.txt", array([0]))
-
 			if self.cluster:
-				sleep(1)
-				
+				sleep(1)			
 				channel = self.server.open_session()
-				
 				channel.exec_command('cd optimization; rm -fr %s' % self.remoteFolder)
 				if channel.recv_exit_status()==1:
 					tkMessageBox.showerror(title='Error', message="The removal of intermediate files on the cluster that were generated during the optimization is unsuccessful. Please remove those files manually.")	
@@ -229,15 +222,13 @@ class Result:
 					self.save['Setup']=self.parameters
 					self.save['Results']=results
 					with open(self.wd+'/%s.res' %self.parameters['Case']['name'], 'wb') as f:
-						dump(self.save, f)
-				
+						dump(self.save, f)				
 			try:
 				lines=self.stderr.readlines()
 				for line in lines:
 					self.TextBox.insert(END,line)
 					self.TextBox.see(END)	
-			except: pass
-						
+			except: pass				
 		
 	def readoutput(self):
 		if not self.viewresults:
@@ -261,7 +252,6 @@ class Result:
 		mtime = 0
 		mtime_cluster = 0
 		GEN_old = -1	
-
 		offspring_max = 1
 		population_max = 1
 		if self.parameters['Case']['type'] == 'single-objective':
@@ -320,7 +310,6 @@ class Result:
 							self.progress = float(self.GEN)/self.GEN_max*100
 							self.ProgressBar['value'] = self.progress
 						fitnesses = list(self.result['fitness'])
-
 						bestCounts = []
 						bests = []
 						counts = []
@@ -359,7 +348,6 @@ class Result:
 				if self.viewresults:
 					self.switch = 0
 				sleep(1)				
-
 		else:
 			flag = 1
 			result_max = 1
@@ -414,8 +402,7 @@ class Result:
 						for file in files:
 							if os.access(file, os.R_OK):
 								os.remove(file)
-							self.sftp.get(file, file)
-								
+							self.sftp.get(file, file)							
 				final_GEN = glob('final_GEN*')
 				self.GEN = len(final_GEN)					
 				if self.GEN > GEN_old:
@@ -473,7 +460,6 @@ class Result:
 					self.switch = 0
 				sleep(2)
 		
-
 	def set_gen(self, event=None):
 		self.lock.acquire()
 		self.plot_GEN = self.generations.index(self.CmbGen.get())
@@ -609,7 +595,6 @@ class Result:
 				else:
 					self.updateprint(self.final)
 
-
 	def updateprint(self, data):
 		if data is not None and self.PrintR is not None:
 			try:
@@ -626,9 +611,7 @@ class Result:
 				item = data.iloc[i].tolist()
 				item[1]=item[1][1:-1]
 				self.Tree.insert('', 'end', text=item[0], values=item[1:])
-
 		
-
 	def sort(self, event=None):
 		if self.parameters['Case']['type'] == 'single-objective' or self.plot_GEN == self.GEN:
 			self.updateprint(self.result)
@@ -646,7 +629,6 @@ class Result:
 		self.PrintR.destroy()
 		self.PrintR=None
 		
-
 	def replot(self):
 		if self.plot_GEN == self.GEN:
 			if self.GEN:
@@ -678,6 +660,7 @@ class Result:
 			self.canvas.draw()	
 		except:
 			pass
+		
 		
 if __name__ == "__main__":
 	root = Tk()
