@@ -6,6 +6,8 @@ import Pmw
 import tkinter.filedialog as tkFileDialog
 import tkinter.messagebox as tkMessageBox
 from PIL import Image, ImageTk 
+
+
 class InputVar:
 	def __init__(self, parent, parameters):
 		parent.__init__
@@ -41,8 +43,7 @@ class InputVar:
 		self.constraint = StringVar()
 		self.constraint.set('')
 		self.EditDialog=None
-		self.SetCandidates=None
-		
+		self.SetCandidates=None		
 		self.ParametersFrame = LabelFrame(parent, text='Variables to be Optimized', style='Title.TLabelframe')
 		self.ParametersFrame.pack()
 		self.Input = Frame(self.ParametersFrame)
@@ -121,10 +122,8 @@ class InputVar:
 		self.Edit.pack(side='right',anchor='e')
 		self.Separator = Separator(self.Tools, orient='vertical').pack(side='right', fill=Y, padx=10)
 
-
 	def pack(self, side='top', fill=None, expand=None, padx=0, pady=0):
 		self.ParametersFrame.pack(side=side, fill=fill, expand=expand, padx=padx, pady=pady)
-
 		
 	def chooseType(self, value):
 		if value == 'continuous':
@@ -177,9 +176,7 @@ class InputVar:
 					else:
 						tkMessageBox.showerror(title='Error', message='The input for candidates should contain at least 2 items.')	
 		else:
-			tkMessageBox.showerror(title='Error', message='The field for label can not be empty.')
-				
-		
+			tkMessageBox.showerror(title='Error', message='The field for label can not be empty.')		
 		
 	def view_records(self):
 		items = self.Tree.get_children()
@@ -201,7 +198,6 @@ class InputVar:
 			del self.variableList[ind[0]]
 		self.view_records()
 		
-
 	def edit_record(self):
 		try:
 			label = self.Tree.item(self.Tree.selection()[0])['text']
@@ -398,6 +394,7 @@ class InputVar:
 		if file:
 			self.constraint.set(file)
 
+			
 if __name__ == "__main__":
 		
 	root = Tk()
