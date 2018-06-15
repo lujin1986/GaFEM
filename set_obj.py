@@ -3,6 +3,7 @@ from tkinter.ttk import *
 import Pmw
 import tkinter.messagebox as tkMessageBox
 
+
 class SetObj:
 	def __init__(self, parent, parameters):
 		self.parent = parent
@@ -48,7 +49,6 @@ class SetObj:
 		self.Delete.grid(row=1, column=2, pady=5, sticky='se')
 		self.view_records()
 
-	
 	def add(self):
 		a = [self.name.get(), self.type.get()]
 		if a[0]:
@@ -92,6 +92,8 @@ class SetObj:
 				self.newwindow.destroy()
 		else:
 			self.newwindow.destroy()
+			
+			
 if __name__ == "__main__":
 		
 	root = Tk()
