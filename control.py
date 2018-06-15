@@ -253,7 +253,7 @@ class Control:
 				self.ResultWidget = None
 				self.Optimize.config(text = "      Start   \nOptimization")
 				self.Results.config(state='normal')
-				savetxt("switch.txt", array([0])
+				savetxt("switch.txt", array([0]))
 		else:
 			if self.ResultWidget.PrintR:
 				self.ResultWidget.PrintR.destroy()
