@@ -7,6 +7,7 @@ import tkinter.messagebox as tkMessageBox
 from set_obj import SetObj
 from webbrowser import open_new
 
+
 class Menubar:
 	def __init__(self, parent, parameters, allunits):
 		parent.__init__
@@ -30,8 +31,7 @@ class Menubar:
 		self.sAddress = StringVar()
 		self.sAddress.set('')
 		self.File = None
-		menu_bar = Menu(parent)
-		
+		menu_bar = Menu(parent)	
 		file_menu = Menu(menu_bar, tearoff=0)
 		file_menu.add_command(label='New', command=self.new_file)
 		file_menu.add_command(label='Open', command=self.open_file)
@@ -39,14 +39,12 @@ class Menubar:
 		file_menu.add_command(label='Save as', command=self.saveas_file)
 		file_menu.add_separator()
 		file_menu.add_command(label='Exit')
-		menu_bar.add_cascade(label='File', menu=file_menu)
-		
+		menu_bar.add_cascade(label='File', menu=file_menu)		
 		set_menu = Menu(menu_bar, tearoff=0)
 		set_menu.add_command(label='GA parameters', command=self.setGApara)
 		set_menu.add_command(label='Server', command=self.setServer)
 		set_menu.add_command(label='Objectives', command=self.setObjectives)
-		menu_bar.add_cascade(label='Set', menu=set_menu)
-		
+		menu_bar.add_cascade(label='Set', menu=set_menu)	
 		about_menu = Menu(menu_bar, tearoff=0)
 		about_menu.add_command(label='About', command=self.about)
 		about_menu.add_command(label='Help', command=self.help)
@@ -140,8 +138,6 @@ class Menubar:
 				self.parameters['GA parameters'][key]= Var.get()
 		self.SetGApara.destroy()	
 		
-
-
 	def setServer(self):
 		self.allunits['Login'].setServer()
 
@@ -210,8 +206,7 @@ class Menubar:
 			else:
 				self.allunits['Control'].multithreads.set(0)
 				self.allunits['Control'].InputThread.configure(entry_state='disabled')	
-	
-	
+		
 	def new_file(self):
 		message = "Have you already saved all the changes to the optimization case '%s'?" % self.allunits['Case'].name.get()
 		ok = tkMessageBox.askokcancel('Creating a new optimization case', message)
@@ -222,26 +217,19 @@ class Menubar:
 				self.parameters[key]=[]
 			self.allunits['Case'].name.set('')	
 			self.allunits['Case'].WD.set('')	
-
 			self.allunits['Case'].radios[0].invoke()			
 			self.allunits['InputVar'].variableList = []
 			self.allunits['InputVar'].view_records()
-	
-
 			self.allunits['InputVar'].checkb.set(0)
 			self.allunits['InputVar'].constraint.set('')
 			self.allunits['InputVar'].Constraint2.config(state='disabled')
-
 			self.allunits['Evaluation'].grow.set('')		
 			self.allunits['Evaluation'].template.set('')		
-			self.allunits['Evaluation'].objective.set('')	
-	
+			self.allunits['Evaluation'].objective.set('')		
 			self.allunits['Control'].seeding.set(0)
 			self.allunits['Control'].seed = []
-			self.allunits['Control'].SetSeed.config(state='disabled')
-	
-			self.allunits['Control'].elitism.set(0)			
-			
+			self.allunits['Control'].SetSeed.config(state='disabled')	
+			self.allunits['Control'].elitism.set(0)					
 			self.allunits['Control'].multithreads.set(0)
 			self.allunits['Control'].InputThread.configure(entry_state='disabled')
 			self.File = None	
@@ -297,8 +285,7 @@ class Menubar:
 					self.parameters['multithreading'][1] = self.allunits['Control'].threads.get()
 				else:
 					self.parameters['multithreading'][0].append(1)
-					self.parameters['multithreading'][1].append(self.allunits['Control'].threads.get())				
-								
+					self.parameters['multithreading'][1].append(self.allunits['Control'].threads.get())												
 			else:
 				if self.parameters['multithreading']:
 					self.parameters['multithreading'][0] = 0
@@ -309,7 +296,6 @@ class Menubar:
 			f = open(self.File, 'wb')
 			pickle.dump(self.parameters, f)
 			f.close()
-
 		else:
 			fname = tkFileDialog.SaveAs(filetypes=[('Opt Files', '*.opt')],
 						 initialfile='%s.opt' % self.allunits['Case'].name.get(),
@@ -367,16 +353,14 @@ class Menubar:
 						self.parameters['multithreading'][1] = self.allunits['Control'].threads.get()
 					else:
 						self.parameters['multithreading'].append(1)
-						self.parameters['multithreading'].append(self.allunits['Control'].threads.get())				
-							
+						self.parameters['multithreading'].append(self.allunits['Control'].threads.get())											
 				else:
 					if self.parameters['multithreading']:
 						self.parameters['multithreading'][0] = 0
 						self.parameters['multithreading'][1] = ''
 					else:
 						self.parameters['multithreading'].append(0)
-						self.parameters['multithreading'].append('')	
-			
+						self.parameters['multithreading'].append('')				
 				self.File = fname
 				f = open(fname, 'wb')
 				save = {}
@@ -391,10 +375,7 @@ class Menubar:
 		self.save_file()
 		
 			
-					
-		
-			
-
+				
 if __name__ == "__main__":
 	root = Tk()
 	Menubar(root)
