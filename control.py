@@ -133,8 +133,7 @@ class Control:
 				WD = self.cwd
 			elif not (WD[0]=='/' or WD[1]==':'):
 				WD = os.path.join(self.cwd, WD)
-				self.wd = WD
-								
+				self.wd = WD								
 			if not os.path.exists(WD):	
 				os.makedirs(WD)
 			if not self.restart.get() or not os.path.exists(WD +'/%s' % self.parameters['Case']['name']):
@@ -238,6 +237,7 @@ class Control:
 
 			self.Optimize.config(text = "      Start   \nOptimization")
 			self.Results.config(state='normal')
+			
 	def closeRW(self):
 		if self.ResultWidget.switch:
 			message = "Are you going to stop the optimization process"
@@ -253,8 +253,7 @@ class Control:
 				self.ResultWidget = None
 				self.Optimize.config(text = "      Start   \nOptimization")
 				self.Results.config(state='normal')
-				savetxt("switch.txt", array([0]))
-
+				savetxt("switch.txt", array([0])
 		else:
 			if self.ResultWidget.PrintR:
 				self.ResultWidget.PrintR.destroy()
@@ -318,7 +317,6 @@ class Control:
 			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.wd, self.allunits['Login'], viewresults=True )
 			self.ResultWidget.newwindow.protocol("WM_DELETE_WINDOW", self.closeRW)
 				
-
 	def setseed(self):
 		self.SeedDialog = Pmw.Dialog(self.parent,
 				  title='Set the Seed',
@@ -341,8 +339,6 @@ class Control:
 			exec("self.Seed_%s.pack(side='top')" % label)
 			exec('self.variables.append(self.Seed_%s)' % label)
 		Pmw.alignlabels(self.variables)
-	
-
 		
 	def actionSeed(self, value):
 		if value == 'OK':
@@ -399,6 +395,7 @@ class Control:
 			self.SetSeed.config(state='normal')
 		else: self.SetSeed.config(state='disabled')
 
+					
 if __name__== "__main__":		
 	variableList = [['var1'], ['var2'], ['var3'],['var4'], ['var5'], ['var6'],['var7'], ['var8'], ['var9']]
 	root = Tk()
