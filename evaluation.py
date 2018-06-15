@@ -6,6 +6,7 @@ from glob import glob
 from PIL import Image, ImageTk 
 import os
 
+
 class Evaluation:
 	def __init__(self, parent,  allunits):
 		parent.__init__
@@ -56,7 +57,6 @@ class Evaluation:
 	def pack(self, side='top', fill=None, expand=None, padx=0, pady=0):
 		self.EvaluationFrame.pack(side=side, fill=fill, expand=expand, padx=padx, pady=pady)	
 
-
 	def setGrow(self):
 		file = tkFileDialog.askopenfilenames(filetypes=[('All files','*')])
 		if len(file) < 2:
@@ -68,7 +68,6 @@ class Evaluation:
 				text += ', %s' % str(item)
 			self.grow.set(text)
 
-
 	def setTemplate(self):
 		file = tkFileDialog.askopenfilenames(filetypes=[('All files','*')])
 		if len(file) < 2:
@@ -79,7 +78,6 @@ class Evaluation:
 			for item in file:
 				text += ', %s' % str(item)
 			self.template.set(text)
-
 		
 	def setObjective(self):
 		file = tkFileDialog.Open(filetypes=[('Python script','*.py')]).show()
