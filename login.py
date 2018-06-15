@@ -8,6 +8,7 @@ import paramiko
 import Pmw
 import os
 
+
 class Login:
 	def __init__(self, parent, parameters, all):
 		parent.__init__
@@ -67,7 +68,6 @@ class Login:
 		self.showLicense = Label(self.display, text = self.license.get())
 		self.showLicense.grid(row=3, column=1, sticky= 'w', padx=12)
 
-
 	def pack(self, side='top', fill=None, expand=None, padx=0, pady=0):
 		self.LoginFrame.pack(side=side, fill=fill, expand=expand, padx=padx, pady=pady)		
 
@@ -102,8 +102,6 @@ class Login:
 				tkMessageBox.showerror(title='Error', message="Login fail! Please check the username and password as well as the setting about the server." )
 		else:
 			self.setServer()
-
-
 		
 	def abqLicense(self):
 		while self.abqLicense_on:
@@ -171,9 +169,7 @@ class Login:
 			self.parameters['Login']['server']=self.sAddress.get()
 		self.SetServer.destroy()
 
-		
-		
-		
+				
 if __name__ == "__main__":		
 				
 	root = Tk()
