@@ -1,19 +1,11 @@
-from tkinter import *
-from tkinter.ttk import *
-from menubar import Menubar
-from case import Case
-from login import Login
-from decoder import InputVar
-from evaluation import Evaluation
-from control import Control
 from pickle import dump
 
 import Pmw
 
-seed = [1,0,1]
 
 class GAGUI:
 	def __init__(self, parent):
+		""" construct the GUI with different functional modules."""
 		self.parent = parent
 		self.all = {'Case':None, 'Login': None, 'InputVar': None, 'Evaluation': None, 'Control': None, 'Menubar':None }
 		self.parameters = {'Case':{}, 'Login':{},'design variables':[], 'constraint':[], 'seed':[], 'GA parameters':{}, 'multithreading':[], 'file':None, 'results':None}
@@ -34,7 +26,7 @@ class GAGUI:
 		self.Menubar = Menubar(parent, self.parameters, self.all)
 		for i in ['Case', 'Login', 'InputVar', 'Evaluation', 'Control', 'Menubar']:
 			self.all[i]=getattr(self, i)
-root = Tk()
+
 def on_closing():
 	f = open("switch.txt", "wb")
 	dump(0, f)
@@ -42,7 +34,8 @@ def on_closing():
 	if GUI.Login.abqLicense_on:
 		GUI.Login.buttonLogout()
 	root.destroy()
-
+	
+root = Tk()
 Pmw.initialise(root)
 GUI=GAGUI(root)
 root.resizable(width=False, height=True)
@@ -51,4 +44,3 @@ img = PhotoImage(file='images/icon.png')
 root.tk.call('wm', 'iconphoto', root._w, img)
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
-
