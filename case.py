@@ -4,9 +4,10 @@ from tkinter import ttk
 from PIL import Image, ImageTk 
 from set_obj import SetObj
 import tkinter.filedialog as tkFileDialog
+import os
 
 class Case:
-	def __init__(self, parent, parameters):
+	def __init__(self, parent, parameters, path):
 		parent.__init__
 		self.parameters = parameters
 		self.style = ttk.Style()
@@ -21,7 +22,7 @@ class Case:
 		self.WD.set('')
 		self.Frame = Frame(parent)
 		self.Frame.pack()
-		image1 = Image.open('images/logo.jpg')
+		image1 = Image.open(os.path.join(path, 'images/logo.jpg'))
 		image1 = image1.resize((330, 42), Image.ANTIALIAS)
 		self.logoImage = ImageTk.PhotoImage(image1)
 		self.Logo = Label(self.Frame, image=self.logoImage)
@@ -37,7 +38,7 @@ class Case:
 		self.LabelWD.grid(row=2, column=0, sticky='e', padx=5)
 		self.EntryWD = Entry(self.CaseFrame, justify = 'left', width = 24, textvariable=self.WD)
 		self.EntryWD.grid(row=2, column=1, sticky='w')
-		image2 = Image.open('images/directory.png')
+		image2 = Image.open(os.path.join(path,'images/directory.png'))
 		image2 = image2.resize((40, 16), Image.ANTIALIAS)
 		self.directoryImage = ImageTk.PhotoImage(image2)
 		self.ButtonWD = Button(self.CaseFrame, image = self.directoryImage, style='directory.TButton', command=self.setWD)
