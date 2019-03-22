@@ -13,12 +13,13 @@ from time import sleep
 
 
 class Control:
-	def __init__(self, root, parent, parameters, allunits):
+	def __init__(self, root, parent, parameters, allunits, path):
 		parent.__init__
 		self.root = root
 		self.parent = parent
 		self.parameters = parameters
 		self.allunits = allunits
+		self.path = path
 		self.seed = []
 		self.seedvalue = {}
 		self.restart = IntVar()
@@ -147,7 +148,7 @@ class Control:
 					if ok:
 						self.restart.set(1)
 					else:
-						os.chdir(self.cwd)
+						os.chdir(WD)
 						try:
 							shutil.rmtree(WD +'/%s' % self.parameters['Case']['name'])
 							os.makedirs(WD +'/%s' % self.parameters['Case']['name'])
@@ -156,7 +157,7 @@ class Control:
 							return							
 				os.chdir(WD +'/%s' % self.parameters['Case']['name'])
 				if not os.path.exists('main3.py'):
-					shutil.copy(self.cwd+'/main3.py', 'main3.py')
+					shutil.copy(os.path.join(self.path,'main3.py'), 'main3.py')
 
 				if self.parameters['constraint'][0]:
 					file = self.parameters['constraint'][1].strip()
@@ -169,7 +170,7 @@ class Control:
 						try:
 							shutil.copy(file, os.path.split(file)[1])
 						except:
-							tkMessageBox.showerror(title='Error', message="The file '%' does not exist." % self.parameters['constraint'][1])
+							tkMessageBox.showerror(title='Error', message="The file '%s' does not exist." % self.parameters['constraint'][1])
 							return
 				files = self.parameters['grow'].split(',')
 				if not sum([True if file else False for file in files]):
@@ -177,6 +178,8 @@ class Control:
 					return	
 				for file in files:
 					file = file.strip()
+					if not file:
+						continue
 					if not (file[0]=='/' or file[1]==':'):
 						file = os.path.join(self.wd, file)
 					if not os.access(os.path.split(file)[1], os.R_OK):
@@ -218,23 +221,22 @@ class Control:
 			f = open(name, 'wb')
 			dump(self.parameters, f)
 			f.close()
-			savetxt("switch.txt", array([1]))
 			self.Optimize.config(text = "      Stop    \nOptimization")
 			sleep(1)
 			if self.ResultWidget:
 				self.ResultWidget.newwindow.destroy()
 				if self.ResultWidget.PrintR:
 					self.ResultWidget.PrintR.destroy()
-			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.wd, self.allunits['Login'] )
+			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.path, self.wd, self.allunits['Login'] )
 			self.ResultWidget.newwindow.protocol("WM_DELETE_WINDOW", self.closeRW)
 			self.Results.config(state='disabled')
 		
 		else:
-			savetxt("switch.txt", array([0]))
+			self.ResultWidget.switch=0
 			if self.ResultWidget.cluster:
-				self.ResultWidget.sftp.remove("switch.txt")
-				self.ResultWidget.sftp.put("switch.txt","switch.txt")
-
+				self.ResultWidget.process.close()
+			else:
+				self.ResultWidget.process.kill()
 			self.Optimize.config(text = "      Start   \nOptimization")
 			self.Results.config(state='normal')
 			
@@ -245,15 +247,15 @@ class Control:
 			if ok:
 				self.ResultWidget.switch=0
 				if self.ResultWidget.cluster:
-					self.ResultWidget.sftp.remove("switch.txt")
-					self.ResultWidget.sftp.put("switch.txt","switch.txt")
+					self.ResultWidget.process.close()
+				else:
+					self.ResultWidget.process.kill()
 				if self.ResultWidget.PrintR:
 					self.ResultWidget.PrintR.destroy()
 				self.ResultWidget.newwindow.destroy()
 				self.ResultWidget = None
 				self.Optimize.config(text = "      Start   \nOptimization")
 				self.Results.config(state='normal')
-				savetxt("switch.txt", array([0]))
 		else:
 			if self.ResultWidget.PrintR:
 				self.ResultWidget.PrintR.destroy()
@@ -314,7 +316,7 @@ class Control:
 								f.write("\t %s\n" % str(list(results[i][objectives[-1][0]])[k]))
 
 
-			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.cwd, self.wd, self.allunits['Login'], viewresults=True )
+			self.ResultWidget = Result(self.ControlFrame, self.parameters, self.Optimize, self.restart.get(), self.path, self.wd, self.allunits['Login'], viewresults=True )
 			self.ResultWidget.newwindow.protocol("WM_DELETE_WINDOW", self.closeRW)
 				
 	def setseed(self):
