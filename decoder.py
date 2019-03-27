@@ -6,10 +6,11 @@ import Pmw
 import tkinter.filedialog as tkFileDialog
 import tkinter.messagebox as tkMessageBox
 from PIL import Image, ImageTk 
+import os
 
 
 class InputVar:
-	def __init__(self, parent, parameters):
+	def __init__(self, parent, parameters, path):
 		parent.__init__
 		self.parent = parent
 		self.parameters = parameters
@@ -109,7 +110,7 @@ class InputVar:
 		self.Constraint1.pack(side='left', anchor='w')
 		self.ConstraintE = Entry(self.Constraints, width=21, state='disabled', textvariable=self.constraint)
 		self.ConstraintE.pack(side='left', anchor='w', padx=5)
-		image = Image.open('images/directory.png')
+		image = Image.open(os.path.join(path,'images/directory.png'))
 		image = image.resize((40, 16), Image.ANTIALIAS)
 		self.directoryImage = ImageTk.PhotoImage(image)
 		self.Constraint2 = Button(self.Constraints,  image= self.directoryImage, state='disabled', command=self.setConstraint)
