@@ -7,6 +7,7 @@ import threading
 import paramiko
 import Pmw
 import os
+from datetime import datetime
 
 
 class Login:
@@ -119,12 +120,11 @@ class Login:
 						total = available+issued
 						self.showLicense.config(text="%d / %d licenses available" % (available, total))				
 						#self.license.set("%d / %d" % (available, total))
-						sleep(5)
+						sleep(1)
 				except:
 					pass 
 			except:	
-				tkMessageBox.showerror(title='Error', message="The connection with the server has been lost!." )
-				self.allunits['Control'].start()
+
 				self.lgobutton.config(state='disabled')
 				self.lgibutton.config(state='normal')
 				self.abqLicense_on=False
@@ -132,6 +132,11 @@ class Login:
 				self.showLicense.config(text="--")
 				self.radios[1].config(state='disabled')		
 				self.radio_var.set(0)
+				if self.allunits['Control'].Optimize.cget('text') != "      Start   \nOptimization" and self.radio_var.get():
+					self.allunits['Control'].start()
+					tkMessageBox.showerror(title='Error', message="The connection with the server has been lost!. The optimization has been stopped automatically. (%s)" % str(datetime.now()))
+				else:
+					tkMessageBox.showerror(title='Error', message="The connection with the server has been lost!")
 				
 	def buttonLogout(self):
 		if self.allunits['Control'].ResultWidget and self.allunits['Control'].ResultWidget.switch and self.allunits['Control'].ResultWidget.cluster:
