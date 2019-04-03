@@ -237,7 +237,7 @@ def getfitness(templateFiles):
 						err2 = traceback.format_exc()
 						stdout.flush()
 					else:
-						files = glob("*%s*" % name)
+						files = glob("%s*" % name)
 						for file in files:
 							remove(file)
 						job[1].fitness.values = fitness
@@ -329,6 +329,7 @@ def main(restart, elitism, seed):
 		elitism: the switch on/off elitism in the optimization
 	"""
 	global valid_ind, result_GEN, fitnesses, switch
+	
 	#start = time()
 	initGEN = 0   
 	if restart:
@@ -372,7 +373,7 @@ def main(restart, elitism, seed):
 		print("restart at generation %d " % initGEN)			
 		parallelization(indList)
 		if not switch:
-			exit()
+			return
 		if Multi:
 			if initGEN:
 				f = open("population_Gen_%d.txt" % (initGEN-1), 'rb')
@@ -411,7 +412,7 @@ def main(restart, elitism, seed):
 				indList.put(["%s_%s" % (str(g).zfill(Gendigs), str(index).zfill(Inddigs)), pop[index]])
 			parallelization(pop)
 			if not switch:
-				break
+				return
 			f = open("population_Gen_%d.txt" % g, 'wb')
 			dump(pop, f)
 			f.close()
@@ -465,21 +466,11 @@ def main(restart, elitism, seed):
 			f = open("population_Gen_%d.txt" % g, 'wb')
 			dump(pop, f)
 			f.close()	
-	savetxt("switch.txt", array([0]))
-	#sleep(2)
-	archive()
-
-
-def checkSwitch():
-	global switch
-	while switch:
-		switch = loadtxt("switch.txt")
-		sleep(2)
-	f = open("valid_ind.txt" , 'wb')
-	dump(valid_ind,f)
-	f.close()
+	switch = 0
+	with open("valid_ind.txt", 'wb') as f:
+		dump(valid_ind, f)
 	save_result_GEN(result_GEN)
-	
+
 		
 def archive():
 	global valid_ind, result_GEN, Multi, switch, fitnesses
@@ -487,9 +478,8 @@ def archive():
 	while switch:
 		new = len(valid_ind)
 		if new > old:
-			f = open("valid_ind.txt" , 'wb')
-			dump(valid_ind,f)
-			f.close()
+			with open("valid_ind.txt", 'wb') as f:
+				dump(valid_ind, f)
 			save_result_GEN(result_GEN)
 		old = new
 		sleep(2)
@@ -526,23 +516,19 @@ toolbox.register("population", population_)
 
 if __name__ == "__main__":
 
-	onOff = Thread(target=checkSwitch)
 	mainThread = Thread(target=main, args=(restart, elitism, seed))
 	archive_t = Thread(target=archive)
-	onOff.setDaemon(True)
 	archive_t.setDaemon(True)
-	onOff.start()
 	mainThread.start()
 	archive_t.start()
-	onOff.join()
 	mainThread.join()
 	archive_t.join()
 	
 	if err1:
 		print("Something wrong has occured in running the \"grow\" function imported from grow.py")
-		print(err1)
-		exit(1)
+		raise Exception(err1)
+
 	elif err2:
 		print("Something wrong has occured in running the \"objective\" function imported from objective.py")
-		print(err2)
-		exit(1)
+		raise Exception(err2)
+
