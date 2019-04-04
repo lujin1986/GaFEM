@@ -180,9 +180,11 @@ class Menubar:
 				self.allunits['InputVar'].checkb.set(1)
 				self.allunits['InputVar'].constraint.set(opt['constraint'][1])
 				self.allunits['InputVar'].ConstraintE.config(state='normal')
+				self.allunits['InputVar'].Constraint2.config(state='normal')
 			else:
 				self.allunits['InputVar'].checkb.set(0)
 				self.allunits['InputVar'].constraint.set('')
+				self.allunits['InputVar'].ConstraintE.config(state='disabled')
 				self.allunits['InputVar'].Constraint2.config(state='disabled')
 			self.allunits['Evaluation'].grow.set(opt['grow'])			
 			self.allunits['Evaluation'].template.set(opt['template'])			
